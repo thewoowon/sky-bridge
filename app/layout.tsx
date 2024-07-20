@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "스카이브릿지",
@@ -122,7 +123,9 @@ export default function RootLayout({
           content={process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
