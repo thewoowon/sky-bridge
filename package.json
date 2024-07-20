@@ -11,9 +11,12 @@
   "dependencies": {
     "@next/third-parties": "^14.2.5",
     "@tanstack/react-query": "^5.51.9",
+    "@types/qs": "^6.9.15",
+    "axios": "^1.7.2",
     "next": "14.2.5",
     "next-seo": "^6.5.0",
     "next-sitemap": "^4.2.3",
+    "qs": "^6.12.3",
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.4.1",
