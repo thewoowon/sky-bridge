@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     siteName: "스카이브릿지",
     images: [
       {
-        url: "https://skybrg.io/og-image.png",
+        url: "https://skybrg.io/og-image.jpg",
         width: 600,
         height: 314,
         alt: "스카이브릿지",
