@@ -63,6 +63,7 @@ const Container = styled.div`
   gap: 16px;
   border-bottom: 1px solid ${COLORS.grayscale[200]};
   padding-bottom: 10px;
+  align-items: center;
 `;
 
 const Title = styled.div`
