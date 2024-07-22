@@ -28,7 +28,10 @@ export const metadata: Metadata = {
     creator: "@stoneslab",
     title: "스카이브릿지",
     description: "꿈을 이루는 힘, 스카이브릿지",
-    images: "",
+    images: {
+      url: "https://skybrg.io/og-image.jpg",
+      alt: "스카이브릿지",
+    },
   },
   generator: "스카이브릿지",
 };
