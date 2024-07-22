@@ -113,11 +113,11 @@ const ChatContext = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding 45px 50px 36px 50px;
   overflow-y: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
+  gap: 12px;
 `;
