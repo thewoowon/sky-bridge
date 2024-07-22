@@ -64,6 +64,10 @@ const Container = styled.div`
   border-bottom: 1px solid ${COLORS.grayscale[200]};
   padding-bottom: 10px;
   align-items: center;
+
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 const Title = styled.div`

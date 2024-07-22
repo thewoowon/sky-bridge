@@ -141,6 +141,7 @@ const Wrapper = styled.div`
   padding: 24px 20px;
   border-radius: 14px;
   gap: 26px;
+  box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.04);
 `;
 
 const Tags = styled.div`
