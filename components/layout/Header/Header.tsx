@@ -1,9 +1,15 @@
 import Logo from '@/components/svg/Logo';
+import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import styled from '@emotion/styled';
 
 const Header = () => {
+  const { backgroundColor } = useBackgroundColorStore();
   return (
-    <Container>
+    <Container
+      style={{
+        backgroundColor,
+      }}
+    >
       <Logo />
     </Container>
   );
@@ -12,7 +18,6 @@ const Header = () => {
 export default Header;
 
 const Container = styled.div`
-
   width: 100%;
   position: absolute;
   top: 0;

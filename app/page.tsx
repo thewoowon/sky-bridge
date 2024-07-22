@@ -1,10 +1,18 @@
 'use client';
 
 import { Banner, Materials, News, Schedule } from '@/components/module';
+import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import { COLORS } from '@/styles/color';
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const { changeBackgroundColor } = useBackgroundColorStore();
+
+  useEffect(() => {
+    changeBackgroundColor(COLORS.grayscale[50]);
+  }, []);
+
   return (
     <Main>
       <Banner />
