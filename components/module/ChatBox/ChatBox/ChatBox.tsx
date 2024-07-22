@@ -159,6 +159,8 @@ const ChatBox = forwardRef<HTMLDivElement, ChatBoxProps>(
 
 export default ChatBox;
 
+ChatBox.displayName = 'ChatBox';
+
 const Form = styled.form<{
   isLoading: boolean;
   isEmpty: boolean;
