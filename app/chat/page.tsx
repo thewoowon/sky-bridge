@@ -6,6 +6,7 @@ import { COLORS } from '@/styles/color';
 import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useCompletion } from 'ai/react';
 
 type FormType = {
   chat: string;
@@ -29,6 +30,14 @@ const ChatPage = () => {
     },
   ]);
 
+  const {
+    completion,
+    complete,
+    isLoading: gptLoading,
+  } = useCompletion({
+    api: '/api/completion',
+  });
+
   const { getValues, watch, setValue, handleSubmit, control } =
     useForm<FormType>({
       defaultValues: {
@@ -38,14 +47,14 @@ const ChatPage = () => {
 
   const onSubmit = async (data: { chat: string }) => {
     const { chat } = data;
+    setChatContext([...chatContext, { chat, role: 'user' }]);
     setValue('chat', '');
     setIsLoading(true);
+    const response = await complete(chat);
     setChatContext([
       ...chatContext,
-      {
-        chat,
-        role: 'user',
-      },
+      { chat, role: 'user' },
+      { chat: String(response), role: 'sky' },
     ]);
     setIsLoading(false);
   };
