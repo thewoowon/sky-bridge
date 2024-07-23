@@ -4,10 +4,11 @@ import Graduation from '@/components/svg/Graduation';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 const GNB = () => {
   const router = useRouter();
+  const pathName = usePathname();
   return (
     <Container
       style={{
@@ -15,6 +16,7 @@ const GNB = () => {
       }}
     >
       <GNBItem
+        selected={pathName === '/chat'}
         onClick={() => {
           router.push('/chat');
         }}
@@ -23,6 +25,7 @@ const GNB = () => {
         질문하기
       </GNBItem>
       <GNBItem
+        selected={pathName === '/'}
         onClick={() => {
           router.push('/');
         }}
@@ -31,6 +34,7 @@ const GNB = () => {
         입시 소식
       </GNBItem>
       <GNBItem
+        selected={pathName === '/ai'}
         onClick={() => {
           router.push('/ai');
         }}
@@ -63,7 +67,9 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const GNBItem = styled.div`
+const GNBItem = styled.div<{
+  selected?: boolean;
+}>`
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -82,6 +88,18 @@ const GNBItem = styled.div`
     font-weight: 800;
     // background-color: ${COLORS.primary[50]};
   }
+
+  ${({ selected }) =>
+    selected &&
+    `
+    color: ${COLORS.primary[600]};
+    font-weight: 800;
+    letter-spacing: 0%;
+
+    svg > path {
+      fill: ${COLORS.primary[600]};
+    }
+  `}
 
   svg > path {
     width: 24px;
