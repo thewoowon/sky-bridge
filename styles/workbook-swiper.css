@@ -1,15 +1,13 @@
 .swiper {
   width: 100%;
-  height: 175px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
 .swiper-slide {
-  text-align: center;
-  font-size: 18px;
-
+  width: fit-content;
   display: flex;
   justify-content: center;
   align-items: center;

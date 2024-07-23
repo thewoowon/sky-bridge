@@ -76,11 +76,6 @@ const ChatPage = () => {
     ]);
     setIsLoading(true);
 
-    // 그냥 1초 쉬어줌 -> 로딩바 띄우기 위함 -> 생각하는 척
-    await setTimeout(async () => {
-      return;
-    }, 3000);
-
     await setTimeout(async () => {
       switch (id) {
         // 수리논술 젤 잘 가르치는 강사는 누구야?
@@ -172,7 +167,7 @@ const ChatPage = () => {
               role: 'user',
             },
             {
-              chat: 'n년 n월 n일부터 n일 기준 수능기출문제집 수학영역 종합베스트야.',
+              chat: `2024년 1월 1일부터 ${new Date().getUTCDate()}일 기준 수능기출문제집 수학영역 종합베스트야.`,
               role: 'sky',
             },
             {
@@ -187,7 +182,7 @@ const ChatPage = () => {
           break;
       }
       setIsLoading(false);
-    }, 1200);
+    }, 2000);
   };
 
   useEffect(() => {

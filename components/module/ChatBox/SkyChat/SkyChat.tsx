@@ -96,7 +96,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
           );
         case 'workbook':
           return (
-            <Container
+            <SwiperContainer
               style={{
                 ...TYPOGRAPHY.body['large2'],
                 fontWeight: 400,
@@ -104,7 +104,15 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               }}
               ref={ref}
             >
-              <Swiper loop={true} className="workbook-swiper" spaceBetween={8}>
+              <Swiper
+                slidesPerView={'auto'}
+                style={{
+                  overflow: 'hidden',
+                }}
+                loop={true}
+                className="workbook-swiper"
+                spaceBetween={'8px'}
+              >
                 {data.map((item, index) => (
                   <SwiperSlide key={index}>
                     <div
@@ -115,7 +123,9 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '8px',
-                        borderRadius: '12px',
+                        borderRadius: '12px 12px 12px 0',
+                        backgroundColor: 'white',
+                        overflow: 'hidden',
                       }}
                     >
                       <div
@@ -127,12 +137,40 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                       >
                         <Image src={item.url} alt={item.title} fill />
                       </div>
-                      <div>{item.title}</div>
+                      <div
+                        style={{
+                          ...TYPOGRAPHY.caption['medium'],
+                          lineHeight: '16px',
+                          letterSpacing: '-1%',
+                          color: 'black',
+                          padding: '0 12px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '2px',
+                        }}
+                      >
+                        <div
+                          style={{
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            width: '100%',
+                            textAlign: 'center',
+                            display: 'flex',
+                            justifyContent: 'flex-start',
+                            ...TYPOGRAPHY.body['medium1'],
+                            color: COLORS.primary[200],
+                          }}
+                        >
+                          {item.rank}위
+                        </div>
+                        {item.title}
+                      </div>
                     </div>
                   </SwiperSlide>
                 ))}
               </Swiper>
-            </Container>
+            </SwiperContainer>
           );
         case 'schedule':
           return (
@@ -155,7 +193,9 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                     gap: '12px',
                   }}
                 >
-                  <CategoryTag category={item.label}>{item.label}</CategoryTag>
+                  <CategoryTag category={item.category}>
+                    {item.label}
+                  </CategoryTag>
                   <div
                     style={{
                       display: 'flex',
@@ -181,6 +221,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                             minWidth: '136px',
                             ...TYPOGRAPHY.body['medium2'],
                             paddingBottom: '6px',
+                            borderBottom: `1px solid ${COLORS.grayscale[70]}`,
                           }}
                         >
                           <div
@@ -299,7 +340,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               ref={ref}
             >
               <Typewriter
-                textArray={['준비 중인 기능입니다.', '조금만 기다려주세요! 🙇‍♂️']}
+                textArray={['준비 중인 기능이에요.', '조금만 기다려주세요! 🙇‍♂️']}
               />
               {/* {data.map((item, index) => (
                 <div key={index}>{item.title}</div>
@@ -338,12 +379,20 @@ const Container = styled.div`
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  max-width: 389px;
+  max-width: 100%;
   width: fit-content;
   background-color: white;
   box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.04);
   border-radius: 12px 12px 12px 0;
   padding: 10px 15px 12px 14px;
+`;
+
+const SwiperContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  width: 100%;
 `;
 
 const SelectionBox = styled.div`
@@ -383,4 +432,40 @@ const Button = styled.button`
 
 const CategoryTag = styled.div<{
   category: string;
-}>``;
+}>`
+  ${({ category }) => {
+    switch (category) {
+      case '수능':
+        return {
+          backgroundColor: COLORS.secondary[100],
+          color: COLORS.secondary[900],
+        };
+      case '수시':
+        return {
+          backgroundColor: '#F3F1FD',
+          color: '#7964F4',
+        };
+      case '정시':
+        return {
+          backgroundColor: '#FDF0F3',
+          color: '#F84B70',
+        };
+      default:
+        return {
+          backgroundColor: '#FDF8EE',
+          color: '#FF9408',
+        };
+    }
+  }}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 23px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+  letter-spacing: -2%;
+  width: fit-content;
+  height: fit-content;
+`;

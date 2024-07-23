@@ -42,7 +42,7 @@ const Schedule = () => {
         다가오는 입시 일정
       </div>
       <Swiper
-        className="banner-schedule"
+        className="schedule-swiper"
         slidesPerView={'auto'}
         spaceBetween={'12px'}
         style={{
