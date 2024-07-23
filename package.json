@@ -12,14 +12,17 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@ai-sdk/openai": "^0.0.38",
     "@emotion/css": "^11.13.0",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^5.16.4",
+    "@nanostores/react": "ai/react",
     "@next/third-parties": "^14.2.5",
     "@tanstack/react-query": "^5.51.9",
     "@types/lodash": "^4.17.7",
     "@types/qs": "^6.9.15",
+    "ai": "^3.2.34",
     "axios": "^1.7.2",
     "framer-motion": "^11.3.8",
     "lodash": "^4.17.21",
@@ -34,11 +37,12 @@
     "react-hot-toast": "^2.4.1",
     "swiper": "^11.1.5",
     "typewriter-effect": "^2.21.0",
+    "zod": "^3.23.8",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
+    "@types/react": "^18.3.3",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
