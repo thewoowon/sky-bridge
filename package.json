@@ -29,9 +29,11 @@
     "qs": "^6.12.3",
     "react": "^18",
     "react-dom": "^18",
+    "react-draggable": "^4.4.6",
     "react-hook-form": "^7.52.1",
     "react-hot-toast": "^2.4.1",
     "swiper": "^11.1.5",
+    "typewriter-effect": "^2.21.0",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
