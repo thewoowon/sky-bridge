@@ -1,0 +1,49 @@
+/* components/Spinner.module.css */
+.spinner {
+  margin: 100px auto;
+  width: 80px; /* 이미지와 유사한 크기 */
+  height: 80px;
+  border: 8px solid transparent;
+  border-top: 8px solid #748fee;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  position: relative;
+}
+
+.spinner:before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border: 8px solid transparent;
+  border-top: 8px solid #748fee;
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: fade 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes fade {
+  0% {
+    border-top-color: #748fee;
+    opacity: 1;
+  }
+  50% {
+    border-top-color: #a0b3f3;
+    opacity: 0.5;
+  }
+  100% {
+    border-top-color: #a0b3f3;
+    opacity: 0;
+  }
+}

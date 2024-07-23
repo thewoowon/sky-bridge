@@ -1,5 +1,7 @@
-const Spinner = ({ size = 'md', ...props }) => {
-    return <div {...props} className={`spinner spinner-${size}`} />;
-}
+import styles from './Spinner.module.css';
+
+const Spinner = () => {
+  return <div className={styles.spinner}></div>;
+};
 
 export default Spinner;
