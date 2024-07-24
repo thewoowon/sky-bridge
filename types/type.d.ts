@@ -26,3 +26,21 @@ type News = {
   src: string;
   date: string;
 };
+
+type ChatType = 'selection' | 'workbook' | 'schedule' | 'teacher' | 'guideline';
+
+type FlowState =
+  | 'idle'
+  | 'accept_offer'
+  | 'select_exam_year'
+  | 'enter_subject_information'
+  | 'enter_current_score'
+  | 'enter_target_university'
+  | 'consulting_completed';
+
+type FlowContext = {
+  examYear?: number;
+  subject?: string;
+  currentScore?: number;
+  targetUniversity?: string;
+};
