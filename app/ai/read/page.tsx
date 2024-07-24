@@ -1,3 +1,5 @@
+'use client';
+
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
