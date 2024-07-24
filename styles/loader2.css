@@ -1,0 +1,17 @@
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 104px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(farthest-side, #748fee 94%, #0000) top/16px 16px no-repeat,
+    conic-gradient(#0000 30%, #748fee);
+  mask: radial-gradient(farthest-side, #0000 calc(100% - 16px), #000 0);
+  -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 16px), #000 0);
+  animation: l13 1s infinite linear;
+}
+@keyframes l13 {
+  100% {
+    transform: rotate(1turn);
+  }
+}
