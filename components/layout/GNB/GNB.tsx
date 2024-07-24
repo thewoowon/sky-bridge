@@ -102,8 +102,6 @@ const GNBItem = styled.div<{
   `}
 
   svg > path {
-    width: 24px;
-    height: 24px;
     transition: fill 0.2s ease-in-out;
   }
 
