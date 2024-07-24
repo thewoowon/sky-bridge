@@ -7,6 +7,7 @@ import styled from '@emotion/styled';
 import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCompletion } from 'ai/react';
+import { debounce } from 'lodash';
 
 type FormType = {
   chat: string;
@@ -20,7 +21,7 @@ const ChatPage = () => {
       chat: string;
       role: 'user' | 'sky';
       data?: any[];
-      type?: 'selection' | 'workbook' | 'schedule' | 'teacher' | 'guideline';
+      type?: ChatType;
       loading?: boolean;
     }[]
   >([
@@ -194,6 +195,8 @@ const ChatPage = () => {
     }, 2000);
   };
 
+  const debounceOnSelectionSubmit = debounce(onSelectionSubmit, 300);
+
   useEffect(() => {
     setTimeout(async () => {
       setChatContext([
@@ -245,7 +248,7 @@ const ChatPage = () => {
                 data={data}
                 type={type}
                 ref={scrollRef}
-                onSelectionSubmit={onSelectionSubmit}
+                onSelectionSubmit={debounceOnSelectionSubmit}
                 isLoading={loading}
               />
             );
