@@ -3,9 +3,6 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Box, Modal } from '@mui/material';
-import { useState } from 'react';
-import { modalStyle } from '@/styles/modal';
 
 type SelectExamYearProps = {
   state: FlowState;
