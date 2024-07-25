@@ -1,3 +1,4 @@
+import { TYPOGRAPHY } from '@/styles/typography';
 import '@styles/loader2.css';
 import { useState } from 'react';
 
@@ -32,6 +33,7 @@ const Loader2 = ({ isLoading }: Loader2Props) => {
           left: '50%',
           transform: 'translate(-50%, -50%)',
           color: '#748fee',
+          ...TYPOGRAPHY.display['large'],
         }}
       >
         {percentage}%

@@ -13,6 +13,13 @@ import EnterTargetUniversity from '@/components/module/Ai/EnterTargetUniversity'
 import ConsultingCompleted from '@/components/module/Ai/ConsultingCompleted';
 import GeneratingResults from '@/components/module/Ai/GeneratingResults';
 import { COLORS } from '@/styles/color';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import '@styles/snap-swiper.css';
+
+const YEAR_LIST = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const AiPage = () => {
   const { changeBackgroundColor } = useBackgroundColorStore();
@@ -84,6 +91,8 @@ const AiPage = () => {
 
   useEffect(() => {
     changeBackgroundColor('transparent');
+    // es린트 무시
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (generateLoading) {
@@ -118,8 +127,28 @@ const AiPage = () => {
             left: '0',
           }}
         >
-          <SnapBox id="year-scroll">
-            {[2024, 2025, 2026, 2027, 2028, 2029, 2030].map((year) => (
+          <SnapBox>
+            <Swiper
+              direction={'vertical'}
+              slidesPerView={'auto'}
+              className="snap-swiper"
+              spaceBetween={9}
+              centeredSlides={true}
+              onSlideChange={(swiper) => {
+                setExamYear(YEAR_LIST[swiper.activeIndex]);
+              }}
+              mousewheel={true}
+            >
+              {YEAR_LIST.map((year, index) => (
+                <SnapSlideItem key={index}>
+                  {year}
+                  <Highlight selected={year === examYear} key={year}>
+                    {year}
+                  </Highlight>
+                </SnapSlideItem>
+              ))}
+            </Swiper>
+            {/* {[2024, 2025, 2026, 2027, 2028, 2029, 2030].map((year) => (
               <SnapItem
                 className={year === examYear ? 'selected' : ''}
                 key={year}
@@ -129,7 +158,7 @@ const AiPage = () => {
               >
                 {year}
               </SnapItem>
-            ))}
+            ))} */}
           </SnapBox>
           <ButtonWrapper>
             <Button
@@ -269,7 +298,7 @@ const SnapBox = styled.div`
   scroll-behavior: smooth;
   background-color: white;
   border-radius: 8px;
-  padding: 8px 0;
+  padding: 8px 11px;
   gap: 9px;
 
   &::-webkit-scrollbar {
@@ -296,4 +325,38 @@ const SnapItem = styled.div<{
     selected ? COLORS.primary[500] : COLORS.grayscale[100]};
   color: ${({ selected }) =>
     selected ? COLORS.primary[100] : COLORS.grayscale[500]};
+`;
+
+const SnapSlideItem = styled(SwiperSlide)`
+  position: relative;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 30px;
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+  letter-spacing: -2%;
+  color: ${COLORS.primary[200]};
+  background-color: transparent;
+  border-radius: 8px;
+  overflow: visible;
+`;
+
+const Highlight = styled.div<{ selected?: boolean }>`
+  position: absolute;
+  width: 100%;
+  height: 46px;
+  background-color: ${COLORS.primary[100]};
+  border-radius: 8px;
+  display: ${({ selected }) => (selected ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -1%;
+  color: ${COLORS.primary[600]};
+  z-index: 10;
 `;
