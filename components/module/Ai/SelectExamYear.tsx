@@ -12,6 +12,7 @@ type SelectExamYearProps = {
   next: () => void;
   context: FlowContext;
   setContext: (examYear: number) => void;
+  handleOpen: () => void;
 };
 
 const SelectExamYear = ({
@@ -19,10 +20,8 @@ const SelectExamYear = ({
   next,
   context,
   setContext,
+  handleOpen,
 }: SelectExamYearProps) => {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   return (
     <Wrapper>
       <TitleBox
@@ -67,41 +66,6 @@ const SelectExamYear = ({
           이때야
         </Button>
       </ButtonWrapper>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            ...modalStyle,
-            height: '280px',
-          }}
-        >
-          <SnapBox>
-            {[2023, 2024, 2025, 2026, 2027].map((year) => (
-              <SnapItem
-                key={year}
-                onClick={() => {
-                  setContext(year);
-                  handleClose();
-                }}
-              >
-                {year}
-              </SnapItem>
-            ))}
-          </SnapBox>
-          <ButtonWrapper>
-            <YearButton onClick={handleOpen}>
-              {context.examYear || 2024}
-            </YearButton>
-            <Button onClick={next} disabled={context.examYear ? false : true}>
-              이때야
-            </Button>
-          </ButtonWrapper>
-        </Box>
-      </Modal>
     </Wrapper>
   );
 };
@@ -118,6 +82,7 @@ const Wrapper = styled.div`
   position: relative;
   padding-top: 50px;
   gap: 10px;
+  position: relative;
 `;
 
 const TitleBox = styled(motion.div)`
@@ -186,10 +151,16 @@ const SnapBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  width: 100%;
   overflow: auto;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const SnapItem = styled.div`
@@ -197,7 +168,7 @@ const SnapItem = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100px;
+  height: fit-content;
   flex-shrink: 0;
   scroll-snap-align: center;
   font-size: 2rem;

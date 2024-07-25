@@ -12,12 +12,17 @@ import EnterCurrentScore from '@/components/module/Ai/EnterCurrentScore';
 import EnterTargetUniversity from '@/components/module/Ai/EnterTargetUniversity';
 import ConsultingCompleted from '@/components/module/Ai/ConsultingCompleted';
 import GeneratingResults from '@/components/module/Ai/GeneratingResults';
+import { COLORS } from '@/styles/color';
 
 const AiPage = () => {
   const { changeBackgroundColor } = useBackgroundColorStore();
   const { flowState, ...flowProps } = useFlow();
   const [data, setData] = useState([]);
   const [generateLoading, setGenerateLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const [examYear, setExamYear] = useState(2024);
 
   const getComponent = (flowState: FlowState) => {
     const components: {
@@ -31,6 +36,7 @@ const AiPage = () => {
           next={flowProps.next}
           context={flowProps.flowContext}
           setContext={flowProps.setExamYear}
+          handleOpen={handleOpen}
         />
       ),
       enter_subject_information: (
@@ -83,12 +89,76 @@ const AiPage = () => {
   if (generateLoading) {
     return (
       <Main>
-        <GeneratingResults state={flowState} context={flowProps.flowContext} />
+        <GeneratingResults
+          state={flowState}
+          context={flowProps.flowContext}
+          loading={generateLoading}
+        />
       </Main>
     );
   }
 
-  return <Main>{getComponent(flowState)}</Main>;
+  return (
+    <Main>
+      {getComponent(flowState)}
+      {/* 해당 모달은 년도 선택에 대한 모달입니다. */}
+      <Modal open={open}>
+        <BackgroundLayer />
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '20px',
+            position: 'absolute',
+            padding: '0 16px 52px 16px',
+            bottom: '0',
+            left: '0',
+          }}
+        >
+          <SnapBox id="year-scroll">
+            {[2024, 2025, 2026, 2027, 2028, 2029, 2030].map((year) => (
+              <SnapItem
+                className={year === examYear ? 'selected' : ''}
+                key={year}
+                onClick={() => {
+                  setExamYear(year);
+                }}
+              >
+                {year}
+              </SnapItem>
+            ))}
+          </SnapBox>
+          <ButtonWrapper>
+            <Button
+              backgroundColor={COLORS.primary[500]}
+              hoverBackgroundColor={COLORS.primary[600]}
+              color="white"
+              onClick={() => {
+                flowProps.setExamYear(examYear);
+                handleClose();
+              }}
+            >
+              확인
+            </Button>
+            <Button
+              backgroundColor={COLORS.grayscale[700]}
+              hoverBackgroundColor={COLORS.grayscale[800]}
+              color="white"
+              onClick={() => {
+                setExamYear(2024);
+                handleClose();
+              }}
+            >
+              취소
+            </Button>
+          </ButtonWrapper>
+        </div>
+      </Modal>
+    </Main>
+  );
 };
 export default AiPage;
 
@@ -114,4 +184,116 @@ const Main = styled.main`
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
+`;
+
+const Modal = styled.div<{ open: boolean }>`
+  display: ${({ open }) => (open ? 'block' : 'none')};
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  padding: 0 16px;
+`;
+
+const BackgroundLayer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0.5;
+`;
+
+const Flex = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  gap: 10px;
+`;
+
+const Button = styled.button<{
+  backgroundColor?: string;
+  hoverBackgroundColor?: string;
+  color?: string;
+  hoverColor?: string;
+}>`
+  width: 100%;
+  height: 44px;
+  background-color: ${({ backgroundColor }) =>
+    backgroundColor || COLORS.primary[500]};
+  color: ${({ color }) => color || COLORS.primary[100]};
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -2%;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: ${({ hoverBackgroundColor }) =>
+      hoverBackgroundColor || COLORS.primary[600]};
+    color: ${({ hoverColor }) => hoverColor || COLORS.primary[100]};
+  }
+
+  &:disabled {
+    background-color: ${COLORS.grayscale[300]};
+    color: #666d75;
+    cursor: not-allowed;
+  }
+`;
+
+const ButtonWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+`;
+
+const SnapBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 280px;
+  overflow: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  background-color: white;
+  border-radius: 8px;
+  padding: 8px 0;
+  gap: 9px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+`;
+
+const SnapItem = styled.div<{
+  selected?: boolean;
+}>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 30px;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  font-size: 24px;
+  font-weight: bold;
+
+  background-color: ${({ selected }) =>
+    selected ? COLORS.primary[500] : COLORS.grayscale[100]};
+  color: ${({ selected }) =>
+    selected ? COLORS.primary[100] : COLORS.grayscale[500]};
 `;

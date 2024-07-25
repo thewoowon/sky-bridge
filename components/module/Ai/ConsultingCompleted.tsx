@@ -3,6 +3,7 @@ import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 type ConsultingCompletedProps = {
   state: FlowState;
@@ -18,6 +19,10 @@ const ConsultingCompleted = ({
   return (
     <Wrapper>
       <TitleBox
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
         style={{
           ...TYPOGRAPHY.title['large'],
         }}
@@ -69,11 +74,11 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
-const TitleBox = styled.div`
+const TitleBox = styled(motion.div)`
   width: 100%;
   text-align: center;
+  height: 116px;
 `;
-
 const Button = styled.button`
   width: 100%;
   height: 44px;

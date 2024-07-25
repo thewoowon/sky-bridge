@@ -3,16 +3,26 @@ import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 type GeneratingResultsProps = {
   state: FlowState;
   context: FlowContext;
+  loading: boolean;
 };
 
-const GeneratingResults = ({ state, context }: GeneratingResultsProps) => {
+const GeneratingResults = ({
+  state,
+  context,
+  loading,
+}: GeneratingResultsProps) => {
   return (
     <Wrapper>
       <TitleBox
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.3 }}
         style={{
           ...TYPOGRAPHY.title['large'],
         }}
@@ -48,7 +58,18 @@ const GeneratingResults = ({ state, context }: GeneratingResultsProps) => {
           sizes="410px"
         />
       </div>
-      <Loader2 />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: 'fit-content',
+          paddingTop: '59px',
+        }}
+      >
+        <Loader2 isLoading={loading} />
+      </div>
     </Wrapper>
   );
 };
@@ -67,9 +88,10 @@ const Wrapper = styled.div`
   gap: 10px;
 `;
 
-const TitleBox = styled.div`
+const TitleBox = styled(motion.div)`
   width: 100%;
   text-align: center;
+  height: 116px;
 `;
 
 const Button = styled.button`
