@@ -75,7 +75,7 @@ const AiPage = () => {
             await setTimeout(() => {
               setGenerateLoading(false);
               flowProps.next();
-            }, 1000);
+            }, 10000);
           }}
         />
       ),
