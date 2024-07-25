@@ -13,7 +13,10 @@ const Loader2 = ({ isLoading }: Loader2Props) => {
     setTimeout(() => {
       setPercentage(percentage + 1);
     }, 100);
+  } else if (!isLoading && percentage !== 0) {
+    setPercentage(100);
   }
+
   return (
     <div
       style={{
