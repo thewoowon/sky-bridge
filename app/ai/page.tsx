@@ -2,7 +2,7 @@
 
 import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import useFlow from '@/hooks/useFlow';
 import Idle from '@/components/module/Ai/Idle';
 import AcceptOffer from '@/components/module/Ai/AcceptOffer';
@@ -13,11 +13,12 @@ import EnterTargetUniversity from '@/components/module/Ai/EnterTargetUniversity'
 import ConsultingCompleted from '@/components/module/Ai/ConsultingCompleted';
 import GeneratingResults from '@/components/module/Ai/GeneratingResults';
 import { COLORS } from '@/styles/color';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '@styles/snap-swiper.css';
+import TeacherCard from '@/components/module/Card/TeacherCard';
 
 const YEAR_LIST = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
@@ -30,6 +31,7 @@ const AiPage = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [examYear, setExamYear] = useState(2024);
+  const swiperRef = useRef<SwiperRef | null>(null);
 
   const getComponent = (flowState: FlowState) => {
     const components: {
@@ -73,7 +75,7 @@ const AiPage = () => {
             await setTimeout(() => {
               setGenerateLoading(false);
               flowProps.next();
-            }, 10000);
+            }, 1000);
           }}
         />
       ),
@@ -109,6 +111,30 @@ const AiPage = () => {
 
   return (
     <Main>
+      {flowState !== 'idle' && (
+        <BackButton
+          onClick={() => {
+            flowProps.back();
+          }}
+        >
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M14.998 19L7.99805 12L14.998 5"
+              stroke="#6178C8"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </BackButton>
+      )}
+
       {getComponent(flowState)}
       {/* 해당 모달은 년도 선택에 대한 모달입니다. */}
       <Modal open={open}>
@@ -129,6 +155,7 @@ const AiPage = () => {
         >
           <SnapBox>
             <Swiper
+              ref={swiperRef}
               direction={'vertical'}
               slidesPerView={'auto'}
               className="snap-swiper"
@@ -343,6 +370,7 @@ const SnapSlideItem = styled(SwiperSlide)`
   background-color: transparent;
   border-radius: 8px;
   overflow: visible;
+  cursor: pointer;
 `;
 
 const Highlight = styled.div<{ selected?: boolean }>`
@@ -359,4 +387,30 @@ const Highlight = styled.div<{ selected?: boolean }>`
   letter-spacing: -1%;
   color: ${COLORS.primary[600]};
   z-index: 10;
+`;
+
+const BackButton = styled.button`
+  position: absolute;
+  top: 58px;
+  left: 16px;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  mix-blend-mode: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: scale 0.2s ease-in-out;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  &:hover {
+    scale: 1.1;
+  }
 `;

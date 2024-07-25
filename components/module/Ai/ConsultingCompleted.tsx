@@ -1,9 +1,15 @@
-import Loader2 from '@/components/element/loader/Loader2';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { useState } from 'react';
+import { getTeacher } from '@/utils/getTeacher';
+import TeacherCard from '../Card/TeacherCard';
+import PlanCard from '../Card/PlanCard';
 
 type ConsultingCompletedProps = {
   state: FlowState;
@@ -16,6 +22,7 @@ const ConsultingCompleted = ({
   context,
   data,
 }: ConsultingCompletedProps) => {
+  const [toggle, setToggle] = useState<'recommend' | 'plan'>('recommend');
   return (
     <Wrapper>
       <TitleBox
@@ -41,20 +48,84 @@ const ConsultingCompleted = ({
       </TitleBox>
       <div
         style={{
-          width: '200px',
-          height: '224px',
+          width: '100%',
+          height: 'fit-content',
           position: 'relative',
         }}
       >
-        <Image
-          src={
-            'https://imagedelivery.net/6qzLODAqs2g1LZbVYqtuQw/fe2d3c33-2d1f-4289-e5b4-acfc9ca71200/public'
-          }
-          alt="gurumi"
-          fill
-          priority
-          sizes="410px"
-        />
+        <div>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              gap: '10px',
+              marginBottom: '20px',
+            }}
+          >
+            <div
+              style={{
+                ...TYPOGRAPHY.title['medium'],
+                color:
+                  toggle === 'recommend'
+                    ? COLORS.primary[700]
+                    : COLORS.grayscale[500],
+                cursor: 'pointer',
+              }}
+              onClick={() => setToggle('recommend')}
+            >
+              강사 추천
+            </div>
+            <div
+              style={{
+                ...TYPOGRAPHY.title['medium'],
+                color:
+                  toggle === 'plan'
+                    ? COLORS.primary[700]
+                    : COLORS.grayscale[500],
+                cursor: 'pointer',
+              }}
+              onClick={() => setToggle('plan')}
+            >
+              맞춤 학습 계획
+            </div>
+          </div>
+        </div>
+        <Swiper
+          style={{
+            width: '100%',
+            height: '328px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          slidesPerView={1}
+          className="result-swiper"
+          spaceBetween={20}
+          centeredSlides={true}
+          onSlideChange={(swiper) => {
+            setToggle(swiper.activeIndex === 0 ? 'recommend' : 'plan');
+          }}
+          mousewheel={false}
+        >
+          <SwiperSlide
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <TeacherCard />
+          </SwiperSlide>
+          <SwiperSlide
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <PlanCard />
+          </SwiperSlide>
+        </Swiper>
       </div>
     </Wrapper>
   );
@@ -78,30 +149,4 @@ const TitleBox = styled(motion.div)`
   width: 100%;
   text-align: center;
   height: 116px;
-`;
-const Button = styled.button`
-  width: 100%;
-  height: 44px;
-  background-color: ${COLORS.primary[500]};
-  color: white;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: -2%;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${COLORS.primary[600]};
-  }
-`;
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  bottom: 20px;
 `;

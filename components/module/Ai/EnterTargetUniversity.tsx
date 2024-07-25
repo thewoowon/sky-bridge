@@ -91,6 +91,11 @@ const EnterTargetUniversity = ({
           onChange={(e) => {
             setContext(e.target.value);
           }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              generatePlan();
+            }
+          }}
         />
         <Button
           onClick={generatePlan}
