@@ -22,8 +22,10 @@ const RadioToggle = ({
           value="plan"
           checked={selectedOption === 'recommend'}
           onClick={() => {
-            console.log('click');
             setSelectedOption('recommend');
+          }}
+          onChange={() => {
+            return;
           }}
         />
         <Label htmlFor="plan" isSelected={selectedOption === 'recommend'}>
@@ -37,6 +39,9 @@ const RadioToggle = ({
           checked={selectedOption === 'plan'}
           onClick={() => {
             setSelectedOption('plan');
+          }}
+          onChange={() => {
+            return;
           }}
         />
         <Label htmlFor="recommend" isSelected={selectedOption === 'plan'}>
