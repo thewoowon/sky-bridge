@@ -38,4 +38,6 @@ const Main = styled.main`
   scrollbar-width: none;
   -ms-overflow-style: none;
   position: relative;
+  gap: 20px;
+  position: relative;
 `;

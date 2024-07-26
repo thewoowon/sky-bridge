@@ -8,37 +8,44 @@ import toast from 'react-hot-toast';
 const PLAN_ARRAY: {
   from: string;
   to: string;
-  content: string;
+  title?: string;
+  content: string[];
 }[] = [
   {
     from: '7월',
     to: '12월',
-    content: '개념 학습 및 기초 문제 풀이',
+    title: '개념 학습 및 기초 문제 풀이',
+    content: [
+      '우선 고등학교 1학년, 2학년 과정의 수학 개념을 복습하면서 기초를 다져봐. 그리고 나서 수능 수학 공통과목인 수학I, 수학II의 개념을 학습하자.',
+      '개념 학습 이후에는 쉬운 난이도의 문제집을 골라서 문제를 풀면서 개념을 적용하는 연습을 하면 돼. 틀린 문제는 반드시 다시 풀어보고 왜 틀렸는지 이유를 파악해야 해.',
+    ],
   },
   {
     from: '1월',
     to: '6월',
-    content: '심화 학습 및 실전 모의고사',
+    title: '심화 개념 학습 및 킬러 문항 대비',
+    content: [
+      '이제부터는 조금 더 어려운 문제집이나 모의고사를 풀면서 심화 개념을 학습하면 좋아. 특히 상위권 대학을 목표로 한다면 킬러 문항 대비도 필수야.',
+      '인강이나 학원 수업을 활용해도 괜찮아. 자신에게 맞는 방법을 찾아서 꾸준히 공부하도록 하자.',
+    ],
   },
   {
     from: '7월',
     to: '12월',
-    content: '개념 학습 및 기초 문제 풀이',
+    title: '모의고사 연습 및 약점 보완',
+    content: [
+      '이 기간에는 매주 주말마다 모의고사를 풀면서 실전 감각을 익혀보자. 성적이 잘 나오지 않는 부분은 따로 체크해서 보완하는 게 중요해.',
+      '틀린 문제나 어려웠던 문제는 오답노트를 만들어서 정리하면 나중에 도움이 될 거야.',
+    ],
   },
   {
     from: '1월',
     to: '6월',
-    content: '심화 학습 및 실전 모의고사',
-  },
-  {
-    from: '7월',
-    to: '12월',
-    content: '개념 학습 및 기초 문제 풀이',
-  },
-  {
-    from: '1월',
-    to: '6월',
-    content: '심화 학습 및 실전 모의고사',
+    title: '최종 마무리 및 컨디션 관리',
+    content: [
+      '마지막으로 지금까지 공부한 내용을 총정리하면서 부족한 부분을 채워나가면 돼. 새로운 내용을 공부하기보다는 기존에 학습한 내용을 복습하는 데 집중하는게 좋아.',
+      '수능 당일에는 최상의 컨디션을 유지할 수 있도록 규칙적인 생활습관을 유지하고 건강관리에도 신경써야 한다는 걸 잊지 마.',
+    ],
   },
 ];
 
@@ -171,7 +178,13 @@ const SessionResult = () => {
           />
         </div>
       </Wrapper>
-      <Description>
+      <Description
+        style={{
+          ...TYPOGRAPHY.title['medium'],
+          color: COLORS.primary[600],
+          lineHeight: '29px',
+        }}
+      >
         2026년 수능을 준비하는 거네? 그럼 아직 시간이 충분하니까 너무 걱정하지
         말고 내가 설계해준 대로 잘 따라오면 돼! 수학 공부를 위한 학습 계획을
         다음과 같이 설계해봤어.
@@ -195,13 +208,13 @@ const SessionResult = () => {
                 backgroundColor: COLORS.primary[50],
                 color: COLORS.primary[600],
                 borderRadius: '10px',
-                padding: '3px 9px',
+                padding: '14px 0',
                 display: 'flex',
-                justifyContent: 'center',
+                justifyContent: 'flex-start',
                 alignItems: 'center',
                 flexDirection: 'column',
                 width: '45px',
-                height: '52px',
+                height: '100%',
               }}
             >
               <div>{plan.from}</div>
@@ -231,19 +244,44 @@ const SessionResult = () => {
                 ...TYPOGRAPHY.body['medium1'],
                 flex: 1,
                 display: 'flex',
-                alignItems: 'center',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
                 justifyContent: 'flex-start',
                 backgroundColor: COLORS.grayscale[50],
-                height: '52px',
+                minHeight: '52px',
+                height: 'fit-content',
                 borderRadius: '10px',
-                padding: '0 10px',
+                padding: '14px 12px',
+                color: '#1E1E1E',
               }}
             >
-              {plan.content}
+              <div>{plan.title}</div>
+              {plan.content && (
+                <div
+                  style={{
+                    ...TYPOGRAPHY.body['medium2'],
+                    color: 'black',
+                    padding: '5px 0',
+                  }}
+                >
+                  {plan.content}
+                </div>
+              )}
             </div>
           </div>
         ))}
       </ScheduleBox>
+      <Description
+        style={{
+          ...TYPOGRAPHY.title['medium'],
+          color: COLORS.primary[600],
+          lineHeight: '29px',
+        }}
+      >
+        연세대학교는 수학 성적이 매우 중요한 학교 중 하나야. 그러니까 이번에
+        설계해준 학습 계획을 잘 따라서 열심히 공부한다면 분명 좋은 결과 있을
+        거라고 믿어!
+      </Description>
     </>
   );
 };
@@ -268,11 +306,13 @@ const NavBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 `;
 
 const Description = styled.div`
   width: 100%;
-  margin-bottom: 20px;
 `;
 
 const ScheduleBox = styled.div`
@@ -280,10 +320,8 @@ const ScheduleBox = styled.div`
   gap: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  flex: 1;
-  overflow: auto;
   scrollbar-width: none;
   -ms-overflow-style: none;
   ::-webkit-scrollbar {
