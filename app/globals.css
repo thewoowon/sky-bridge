@@ -38,3 +38,35 @@ body {
     text-wrap: balance;
   }
 }
+
+.error-toast {
+  width: 100%;
+  height: 100%;
+  background-color: #ffe96f;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -2%;
+  text-align: left;
+}
+
+.error-toast > div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.success-toast {
+  width: 100%;
+  height: 100%;
+  background-color: #e6f7e9;
+  font-size: 14px;
+  line-height: 21px;
+  letter-spacing: -2%;
+  text-align: left;
+}
+
+.success-toast > div {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}

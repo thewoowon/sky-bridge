@@ -70,11 +70,26 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         </div>
         <Toaster
           toastOptions={{
-            className: '',
-            style: {
-              border: '1px solid #713200',
-              padding: '16px',
-              color: '#713200',
+            success: {
+              icon: null,
+              duration: 5000,
+              className: 'success-toast',
+            },
+            error: {
+              icon: null,
+              duration: 5000,
+              className: 'error-toast',
+            },
+            custom: {
+              duration: 5000,
+              style: {
+                width: '100%',
+                backgroundColor: '#FFE96F',
+                fontSize: '14px',
+                lineHeight: '21px',
+                letterSpacing: '-2%',
+                textAlign: 'left',
+              },
             },
           }}
         />
