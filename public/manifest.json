@@ -1,5 +1,6 @@
 {
- "name": "App",
+ "name": "스카이브릿지",
+ "short_name": "스카이브릿지",
  "icons": [
   {
    "src": "\/android-icon-36x36.png",
@@ -37,5 +38,10 @@
    "type": "image\/png",
    "density": "4.0"
   }
- ]
+ ],
+ "start_url": "/",
+ "display": "standalone",
+ "orientation": "portrait",
+ "theme_color": "#FFFFFF",
+ "background_color": "#FFFFFF"
 }

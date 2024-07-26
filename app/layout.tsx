@@ -1,39 +1,39 @@
-import type { Metadata } from "next";
-import "./globals.css";
-import Providers from "./providers";
+import type { Metadata } from 'next';
+import './globals.css';
+import Providers from './providers';
 
 export const metadata: Metadata = {
-  title: "스카이브릿지",
-  description: "꿈을 이루는 힘, 스카이브릿지",
-  metadataBase: new URL("https://skybrg.io"),
+  title: '스카이브릿지',
+  description: '꿈을 이루는 힘, 스카이브릿지',
+  metadataBase: new URL('https://skybrg.io'),
   openGraph: {
-    type: "website",
-    locale: "ko_KR",
-    url: "https://skybrg.io",
-    siteName: "스카이브릿지",
+    type: 'website',
+    locale: 'ko_KR',
+    url: 'https://skybrg.io',
+    siteName: '스카이브릿지',
     images: [
       {
-        url: "https://skybrg.io/og-image.jpg",
+        url: 'https://skybrg.io/og-image.jpg',
         width: 600,
         height: 314,
-        alt: "스카이브릿지",
+        alt: '스카이브릿지',
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    site: "@skybrg",
-    siteId: "1467726470533754880",
-    creatorId: "1467726470533754880",
-    creator: "@stoneslab",
-    title: "스카이브릿지",
-    description: "꿈을 이루는 힘, 스카이브릿지",
+    card: 'summary_large_image',
+    site: '@skybrg',
+    siteId: '1467726470533754880',
+    creatorId: '1467726470533754880',
+    creator: '@stoneslab',
+    title: '스카이브릿지',
+    description: '꿈을 이루는 힘, 스카이브릿지',
     images: {
-      url: "https://skybrg.io/og-image.jpg",
-      alt: "스카이브릿지",
+      url: 'https://skybrg.io/og-image.jpg',
+      alt: '스카이브릿지',
     },
   },
-  generator: "스카이브릿지",
+  generator: '스카이브릿지',
 };
 
 export default function RootLayout({
