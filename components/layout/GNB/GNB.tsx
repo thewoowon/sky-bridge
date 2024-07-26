@@ -65,6 +65,7 @@ const Container = styled.div`
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
   overflow: hidden;
+  z-index: 10;
 `;
 
 const GNBItem = styled.div<{

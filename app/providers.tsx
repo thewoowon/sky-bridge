@@ -68,7 +68,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           {children}
           <GNB />
         </div>
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            className: '',
+            style: {
+              border: '1px solid #713200',
+              padding: '16px',
+              color: '#713200',
+            },
+          }}
+        />
       </QueryClientProvider>
       <GoogleAnalytics gaId={gtag.GA_TRACKING_ID || ''} />
       <GoogleTagManager gtmId={gtag.GTM_TRACKING_ID || ''} />

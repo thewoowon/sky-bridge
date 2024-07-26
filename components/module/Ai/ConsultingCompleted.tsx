@@ -2,14 +2,14 @@ import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { useState } from 'react';
-import { getTeacher } from '@/utils/getTeacher';
+import { useEffect, useRef, useState } from 'react';
 import TeacherCard from '../Card/TeacherCard';
 import PlanCard from '../Card/PlanCard';
+import RadioToggle from '@/components/element/radio/RadioToggle';
 
 type ConsultingCompletedProps = {
   state: FlowState;
@@ -22,7 +22,15 @@ const ConsultingCompleted = ({
   context,
   data,
 }: ConsultingCompletedProps) => {
+  const ref = useRef<SwiperRef>(null);
   const [toggle, setToggle] = useState<'recommend' | 'plan'>('recommend');
+
+  useEffect(() => {
+    if (ref.current) {
+      if (toggle === 'recommend') ref.current.swiper.slideTo(0);
+      else ref.current.swiper.slideTo(1);
+    }
+  }, [toggle]);
   return (
     <Wrapper>
       <TitleBox
@@ -51,46 +59,21 @@ const ConsultingCompleted = ({
           width: '100%',
           height: 'fit-content',
           position: 'relative',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: '24px',
         }}
       >
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '10px',
-              marginBottom: '20px',
-            }}
-          >
-            <div
-              style={{
-                ...TYPOGRAPHY.title['medium'],
-                color:
-                  toggle === 'recommend'
-                    ? COLORS.primary[700]
-                    : COLORS.grayscale[500],
-                cursor: 'pointer',
-              }}
-              onClick={() => setToggle('recommend')}
-            >
-              강사 추천
-            </div>
-            <div
-              style={{
-                ...TYPOGRAPHY.title['medium'],
-                color:
-                  toggle === 'plan'
-                    ? COLORS.primary[700]
-                    : COLORS.grayscale[500],
-                cursor: 'pointer',
-              }}
-              onClick={() => setToggle('plan')}
-            >
-              맞춤 학습 계획
-            </div>
-          </div>
-        </div>
+        <RadioToggle
+          selectedOption={toggle}
+          setSelectedOption={(option) => {
+            setToggle(option);
+          }}
+        />
         <Swiper
+          ref={ref}
           style={{
             width: '100%',
             height: '328px',
@@ -142,11 +125,10 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   position: relative;
   padding-top: 50px;
-  gap: 10px;
+  gap: 35px;
 `;
 
 const TitleBox = styled(motion.div)`
   width: 100%;
   text-align: center;
-  height: 116px;
 `;

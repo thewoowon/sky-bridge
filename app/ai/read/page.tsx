@@ -1,97 +1,41 @@
 'use client';
 
-import { COLORS } from '@/styles/color';
-import { TYPOGRAPHY } from '@/styles/typography';
+import SessionResult from '@/components/module/Ai/SessionResult';
 import styled from '@emotion/styled';
-import Image from 'next/image';
+import { Suspense } from 'react';
 
 const ReadPage = () => {
   return (
-    <Wrapper>
-      <TitleBox
-        style={{
-          ...TYPOGRAPHY.title['large'],
-        }}
-      >
-        안녕하세요? <br />
-        저는 제공해주신 정보를 바탕으로
-        <br />
-        맞춤형 학습을 계획해드리는
-        <br />
-        <span
-          style={{
-            color: COLORS.primary[700],
-          }}
-        >
-          AI 과외 선생님, 구르미에요.
-        </span>
-      </TitleBox>
-      <div
-        style={{
-          width: '200px',
-          height: '224px',
-          position: 'relative',
-        }}
-      >
-        <Image
-          src={
-            'https://imagedelivery.net/6qzLODAqs2g1LZbVYqtuQw/fe2d3c33-2d1f-4289-e5b4-acfc9ca71200/public'
-          }
-          alt="gurumi"
-          fill
-          priority
-          sizes="410px"
-        />
-      </div>
-      <ButtonWrapper>
-        <Button>안녕</Button>
-      </ButtonWrapper>
-    </Wrapper>
+    <Main>
+      <Suspense fallback={<div>Loading...</div>}>
+        <SessionResult />
+      </Suspense>
+    </Main>
   );
 };
 
 export default ReadPage;
 
-const Wrapper = styled.div`
-  flex: 1;
+const Main = styled.main`
   width: 100%;
   display: flex;
+  min-height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  position: relative;
-  padding-top: 50px;
-  gap: 10px;
-`;
+  padding: 57px 16px 88px 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(109, 129, 200, 0.5) 0%,
+    rgba(227, 253, 111, 0.3) 100%
+  );
+  overflow-x: hidden;
+  overflow-y: auto;
 
-const TitleBox = styled.div`
-  width: 100%;
-  text-align: center;
-`;
-
-const Button = styled.button`
-  width: 100%;
-  height: 44px;
-  background-color: ${COLORS.primary[500]};
-  color: white;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 20px;
-  letter-spacing: -2%;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover {
-    background-color: ${COLORS.primary[600]};
+  &::-webkit-scrollbar {
+    display: none;
   }
-`;
-
-const ButtonWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  bottom: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
 `;

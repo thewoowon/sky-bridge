@@ -11,7 +11,7 @@ export default function Home() {
 
   useEffect(() => {
     changeBackgroundColor(COLORS.grayscale[50]);
-  }, []);
+  }, [changeBackgroundColor]);
 
   return (
     <Main>
