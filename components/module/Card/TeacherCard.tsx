@@ -52,6 +52,8 @@ const TeacherCard = () => {
             height: '100%',
             objectFit: 'cover',
           }}
+          priority
+          sizes="(max-width: 320px) 240px, 320px"
         />
       </div>
 
