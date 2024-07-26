@@ -42,12 +42,21 @@ const PLAN_ARRAY: {
   },
 ];
 
-const PlanCard = () => {
+type PlanCardProps = {
+  planList: {
+    startDate: string;
+    endDate: string;
+    title: string;
+  }[];
+  sessionId: string;
+};
+
+const PlanCard = ({ planList, sessionId }: PlanCardProps) => {
   const router = useRouter();
   return (
     <Container>
       <ScheduleBox>
-        {PLAN_ARRAY.map((plan, index) => (
+        {planList.map((plan, index) => (
           <div
             key={index}
             style={{
@@ -70,11 +79,11 @@ const PlanCard = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
-                width: '45px',
+                width: '72px',
                 height: '52px',
               }}
             >
-              <div>{plan.from}</div>
+              <div>{plan.startDate}</div>
               <div
                 style={{
                   padding: '1px 0',
@@ -94,7 +103,7 @@ const PlanCard = () => {
                 </svg>
               </div>
 
-              <div>{plan.to}</div>
+              <div>{plan.endDate}</div>
             </div>
             <div
               style={{
@@ -107,9 +116,13 @@ const PlanCard = () => {
                 height: '52px',
                 borderRadius: '10px',
                 padding: '0 10px',
+                // text overflow ellipsis
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
             >
-              {plan.content}
+              {plan.title}
             </div>
           </div>
         ))}
@@ -125,7 +138,7 @@ const PlanCard = () => {
       >
         <Button
           onClick={() => {
-            router.push('/ai/read?session_id=abcdefghijklmn');
+            router.push('/ai/read?session_id=' + sessionId);
           }}
         >
           자세히 보기
