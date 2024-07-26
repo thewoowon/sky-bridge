@@ -58,7 +58,14 @@ const SelectExamYear = ({
         />
       </div>
       <ButtonWrapper>
-        <YearButton onClick={handleOpen}>{context.examYear || 2024}</YearButton>
+        <YearButton
+          onClick={() => {
+            handleOpen();
+            setContext(2024);
+          }}
+        >
+          {context.examYear || 2024}
+        </YearButton>
         <Button onClick={next} disabled={context.examYear ? false : true}>
           이때야
         </Button>

@@ -4,6 +4,7 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Sequence from '@/components/element/sequence/Sequence';
 
 type GeneratingResultsProps = {
   state: FlowState;
@@ -68,7 +69,7 @@ const GeneratingResults = ({
           paddingTop: '59px',
         }}
       >
-        <Loader2 isLoading={loading} />
+        <Sequence isLoading={loading} />
       </div>
     </Wrapper>
   );

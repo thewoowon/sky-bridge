@@ -18,7 +18,8 @@ import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '@styles/snap-swiper.css';
-import TeacherCard from '@/components/module/Card/TeacherCard';
+import useWarnOnUnload from '@/hooks/useWarnOnUnload';
+import customAxios from '@/lib/axios';
 
 const YEAR_LIST = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
@@ -32,6 +33,21 @@ const AiPage = () => {
   const handleClose = () => setOpen(false);
   const [examYear, setExamYear] = useState(2024);
   const swiperRef = useRef<SwiperRef | null>(null);
+
+  useWarnOnUnload();
+
+  const getResult = async () => {
+    try {
+      const { examYear, subject, currentScore, targetUniversity } =
+        flowProps.flowContext;
+
+      const pathname = `/sky/ai/${examYear}/${subject}/${currentScore}/${targetUniversity}`;
+      const response = await customAxios.get(pathname).then((res) => res.data);
+      setData(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const getComponent = (flowState: FlowState) => {
     const components: {
@@ -72,10 +88,9 @@ const AiPage = () => {
           setContext={flowProps.setTargetUniversity}
           generatePlan={async () => {
             setGenerateLoading(true);
-            await setTimeout(() => {
-              setGenerateLoading(false);
-              flowProps.next();
-            }, 1000);
+            await getResult();
+            flowProps.next();
+            setGenerateLoading(false);
           }}
         />
       ),

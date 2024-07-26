@@ -1,8 +1,11 @@
+import customAxios from '@/lib/axios';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 const PLAN_ARRAY: {
@@ -52,6 +55,34 @@ const PLAN_ARRAY: {
 const SessionResult = () => {
   const params = useSearchParams();
   const router = useRouter();
+  const [planData, setPlanData] = useState<{
+    intro: string;
+    outro: string;
+    planList: {
+      content: string;
+      endDate: string;
+      startDate: string;
+      title: string;
+    }[];
+    resultId: number;
+  }>({
+    intro: '',
+    outro: '',
+    planList: [],
+    resultId: 0,
+  });
+
+  // Queries
+  const { isLoading, data } = useQuery({
+    queryKey: ['resumes', params.get('session_id')],
+    queryFn: () => {
+      return customAxios({
+        method: 'GET',
+        url: `/sky/result/${params.get('session_id')}`,
+      }).then((res) => res.data);
+    },
+    enabled: !!params.get('session_id'),
+  });
 
   const shareContent = async () => {
     const shareData: ShareData = {
@@ -97,6 +128,17 @@ const SessionResult = () => {
       console.error('Error copying to clipboard:', error);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      setPlanData(data);
+    }
+  }, [data]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <NavBox
@@ -185,12 +227,10 @@ const SessionResult = () => {
           lineHeight: '29px',
         }}
       >
-        2026년 수능을 준비하는 거네? 그럼 아직 시간이 충분하니까 너무 걱정하지
-        말고 내가 설계해준 대로 잘 따라오면 돼! 수학 공부를 위한 학습 계획을
-        다음과 같이 설계해봤어.
+        {planData.intro}
       </Description>
       <ScheduleBox>
-        {PLAN_ARRAY.map((plan, index) => (
+        {planData.planList.map((plan, index) => (
           <div
             key={index}
             style={{
@@ -213,11 +253,11 @@ const SessionResult = () => {
                 justifyContent: 'flex-start',
                 alignItems: 'center',
                 flexDirection: 'column',
-                width: '45px',
+                width: '72px',
                 height: '100%',
               }}
             >
-              <div>{plan.from}</div>
+              <div>{plan.startDate}</div>
               <div
                 style={{
                   padding: '1px 0',
@@ -237,7 +277,7 @@ const SessionResult = () => {
                 </svg>
               </div>
 
-              <div>{plan.to}</div>
+              <div>{plan.endDate}</div>
             </div>
             <div
               style={{
@@ -278,9 +318,7 @@ const SessionResult = () => {
           lineHeight: '29px',
         }}
       >
-        연세대학교는 수학 성적이 매우 중요한 학교 중 하나야. 그러니까 이번에
-        설계해준 학습 계획을 잘 따라서 열심히 공부한다면 분명 좋은 결과 있을
-        거라고 믿어!
+        {planData.outro}
       </Description>
     </>
   );

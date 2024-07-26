@@ -91,14 +91,16 @@ const EnterTargetUniversity = ({
           onChange={(e) => {
             setContext(e.target.value);
           }}
-          onKeyDown={(e) => {
+          onKeyDown={async (e) => {
             if (e.key === 'Enter') {
-              generatePlan();
+              await generatePlan();
             }
           }}
         />
         <Button
-          onClick={generatePlan}
+          onClick={async () => {
+            await generatePlan();
+          }}
           disabled={context.targetUniversity ? false : true}
         >
           이거야

@@ -14,7 +14,7 @@ import RadioToggle from '@/components/element/radio/RadioToggle';
 type ConsultingCompletedProps = {
   state: FlowState;
   context: FlowContext;
-  data: any[];
+  data: any;
 };
 
 const ConsultingCompleted = ({
@@ -106,7 +106,7 @@ const ConsultingCompleted = ({
               alignItems: 'center',
             }}
           >
-            <PlanCard />
+            <PlanCard planList={data.planList} sessionId={data.resultId} />
           </SwiperSlide>
         </Swiper>
       </div>

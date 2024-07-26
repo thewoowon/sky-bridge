@@ -3,6 +3,7 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 type EnterSubjectInformationProps = {
   state: FlowState;
@@ -101,7 +102,18 @@ const EnterSubjectInformation = ({
             </SubjectItem>
           ))}
         </SubjectBox>
-        <Button onClick={next} disabled={context.subject ? false : true}>
+        <Button
+          onClick={() => {
+            // 유효성 검사 필요
+
+            if (!context.subject) {
+              toast.error('🚨 과목이 아직 선택되지 않았어요.');
+              return;
+            }
+
+            next();
+          }}
+        >
           이거야
         </Button>
       </ButtonWrapper>

@@ -3,6 +3,7 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import Sequence from '@/components/element/sequence/Sequence';
 
 type IdleProps = {
   state: FlowState;
@@ -55,7 +56,6 @@ const Idle = ({ state, next }: IdleProps) => {
           sizes="410px"
         />
       </motion.div>
-
       <ButtonWrapper>
         <Button onClick={next}>안녕</Button>
       </ButtonWrapper>

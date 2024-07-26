@@ -1,10 +1,17 @@
 'use client';
 
 import SessionResult from '@/components/module/Ai/SessionResult';
+import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import styled from '@emotion/styled';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 const ReadPage = () => {
+  const { changeBackgroundColor } = useBackgroundColorStore();
+  useEffect(() => {
+    changeBackgroundColor('transparent');
+    // es린트 무시
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Main>
       <Suspense fallback={<div>Loading...</div>}>
