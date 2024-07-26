@@ -72,16 +72,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           toastOptions={{
             success: {
               icon: null,
-              duration: 5000,
+              duration: 3000,
               className: 'success-toast',
             },
             error: {
               icon: null,
-              duration: 5000,
+              duration: 3000,
               className: 'error-toast',
             },
             custom: {
-              duration: 5000,
+              duration: 3000,
               style: {
                 width: '100%',
                 backgroundColor: '#FFE96F',
