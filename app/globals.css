@@ -29,7 +29,11 @@ body {
     'Segoe UI Symbol',
     sans-serif !important;
   color: rgb(var(--foreground-rgb));
-  background: white;
+  background: linear-gradient(
+    45deg,
+    rgba(102, 102, 102, 1) 0%,
+    rgba(0, 0, 0, 1) 100%
+  );
   scroll-behavior: smooth;
 }
 
