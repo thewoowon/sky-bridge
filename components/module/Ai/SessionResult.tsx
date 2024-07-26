@@ -253,7 +253,7 @@ const SessionResult = () => {
                 justifyContent: 'flex-start',
                 alignItems: 'center',
                 flexDirection: 'column',
-                width: '72px',
+                width: '82px',
                 height: '100%',
               }}
             >

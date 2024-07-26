@@ -79,7 +79,7 @@ const PlanCard = ({ planList, sessionId }: PlanCardProps) => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 flexDirection: 'column',
-                width: '72px',
+                width: '82px',
                 height: '52px',
               }}
             >
