@@ -25,10 +25,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-    if (document.body.getAttribute('style') === '') {
-      document.body.removeAttribute('style');
-    }
-
     // 뷰포트 높이를 계산하고 해당 값을 사용하여 요소의 스타일을 업데이트하는 함수
     function adjustViewportHeight() {
       const vh = window.innerHeight * 0.01;
@@ -47,7 +43,8 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       adjustViewportHeight();
     };
     const handleBlur = () => {
-      setTimeout(adjustViewportHeight, 100); // 약간의 지연 후에 높이를 재계산
+      // 약간의 지연 후에 높이를 재계산 (지연 시간 증가)
+      setTimeout(adjustViewportHeight, 300);
     };
 
     const inputs = document.querySelectorAll('input, textarea');

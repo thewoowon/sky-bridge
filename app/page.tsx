@@ -37,8 +37,7 @@ const Main = styled.main`
   padding-bottom: 154px;
   background-color: ${COLORS.grayscale[50]};
   gap: 28px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: auto;
 
   &::-webkit-scrollbar {
     display: none;
