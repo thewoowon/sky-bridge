@@ -33,7 +33,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 70px;
+  padding-top: 63px;
   padding-bottom: 154px;
   background-color: ${COLORS.grayscale[50]};
   gap: 28px;
