@@ -147,6 +147,12 @@ const Button = styled.button`
   &:hover {
     background-color: ${COLORS.primary[600]};
   }
+
+  &:disabled {
+    background-color: ${COLORS.grayscale[300]};
+    color: #666d75;
+    cursor: not-allowed;
+  }
 `;
 
 const ButtonWrapper = styled.div`

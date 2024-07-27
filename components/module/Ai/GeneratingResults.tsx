@@ -61,12 +61,14 @@ const GeneratingResults = ({
       </div>
       <div
         style={{
+          position: 'absolute',
+          bottom: '0',
+          paddingBottom: '80px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           width: '100%',
           height: 'fit-content',
-          paddingTop: '59px',
         }}
       >
         <Sequence isLoading={loading} />

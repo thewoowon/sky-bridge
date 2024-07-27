@@ -63,6 +63,7 @@ const SelectExamYear = ({
             handleOpen();
             setContext(2024);
           }}
+          selected={!!context.examYear}
         >
           {context.examYear || 2024}
         </YearButton>
@@ -120,11 +121,14 @@ const Button = styled.button`
   }
 `;
 
-const YearButton = styled.button`
+const YearButton = styled.button<{
+  selected: boolean;
+}>`
   width: 100%;
   height: 44px;
   background-color: white;
-  color: ${COLORS.primary[100]};
+  color: ${({ selected }) =>
+    selected ? COLORS.primary[600] : COLORS.primary[100]};
   border-radius: 8px;
   border: 1px solid ${COLORS.grayscale[300]};
   cursor: pointer;

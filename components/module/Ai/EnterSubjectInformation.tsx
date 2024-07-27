@@ -113,6 +113,7 @@ const EnterSubjectInformation = ({
 
             next();
           }}
+          disabled={!context.subject}
         >
           이거야
         </Button>
