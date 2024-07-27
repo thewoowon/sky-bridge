@@ -42,20 +42,26 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     window.addEventListener('resize', adjustViewportHeight);
     window.addEventListener('orientationchange', adjustViewportHeight);
 
-    // iOS 키보드 문제를 해결하기 위해 focus와 blur 이벤트 처리
+    // 모바일 iOS 환경에서 키보드가 올라올 때 vh 값을 재계산
+    const handleFocus = () => {
+      adjustViewportHeight();
+    };
+    const handleBlur = () => {
+      setTimeout(adjustViewportHeight, 100); // 약간의 지연 후에 높이를 재계산
+    };
+
     const inputs = document.querySelectorAll('input, textarea');
     inputs.forEach((input) => {
-      input.addEventListener('focus', adjustViewportHeight);
-      input.addEventListener('blur', adjustViewportHeight);
+      input.addEventListener('focus', handleFocus);
+      input.addEventListener('blur', handleBlur);
     });
 
-    // 이벤트를 제거하는 함수를 반환
     return () => {
       window.removeEventListener('resize', adjustViewportHeight);
       window.removeEventListener('orientationchange', adjustViewportHeight);
       inputs.forEach((input) => {
-        input.removeEventListener('focus', adjustViewportHeight);
-        input.removeEventListener('blur', adjustViewportHeight);
+        input.removeEventListener('focus', handleFocus);
+        input.removeEventListener('blur', handleBlur);
       });
     };
   }, []);
