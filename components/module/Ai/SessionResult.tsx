@@ -144,6 +144,7 @@ const SessionResult = () => {
       <NavBox
         style={{
           ...TYPOGRAPHY.body['large1'],
+          lineHeight: '22px',
         }}
       >
         <svg
@@ -334,23 +335,26 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  padding-top: 50px;
   gap: 10px;
+  padding-bottom: 80px;
 `;
 
 const NavBox = styled.div`
   width: 100%;
-  height: 57px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: sticky;
   top: 0;
   z-index: 100;
+  padding: 17px 16px;
+  background-color: rgba(255, 255, 255, 0.8);
 `;
 
 const Description = styled.div`
   width: 100%;
+  z-index: 1;
+  padding: 0 16px;
 `;
 
 const ScheduleBox = styled.div`
@@ -365,4 +369,5 @@ const ScheduleBox = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  padding: 0 16px;
 `;
