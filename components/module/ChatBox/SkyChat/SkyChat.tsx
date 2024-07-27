@@ -109,7 +109,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 style={{
                   overflow: 'hidden',
                 }}
-                loop={true}
+                loop={false}
                 className="workbook-swiper"
                 spaceBetween={'8px'}
               >
