@@ -10,22 +10,22 @@ import ScheduleItem from './ScheduleItem';
 const SCHEDULE_DATA: Schedule[] = [
   {
     type: '수시',
-    date: '2024.07.30',
+    date: '2024-07-30',
     title: '학생부 작성 기준일',
   },
   {
     type: '정시',
-    date: '2024.08.12',
+    date: '2024-08-12',
     title: '입학원서 접수 기간',
   },
   {
     type: '수시',
-    date: '2024.09.10',
+    date: '2024-09-10',
     title: '학생부 제출 마감일',
   },
   {
     type: '정시',
-    date: '2024.11.18',
+    date: '2024-11-18',
     title: '2024 정시 수능 시험',
   },
 ];

@@ -5,7 +5,7 @@ import styled from '@emotion/styled';
 
 const ScheduleItem = ({ schedule }: { schedule: Schedule }) => {
   const dDay = new Date(schedule.date).getTime() - new Date().getTime();
-  const dateString = schedule.date.split('.');
+  const dateString = schedule.date.split('-');
   return (
     <Container>
       <div
