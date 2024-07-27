@@ -22,17 +22,17 @@ const Idle = ({ state, next }: IdleProps) => {
           ...TYPOGRAPHY.title['large'],
         }}
       >
-        안녕하세요? <br />
-        저는 제공해주신 정보를 바탕으로
+        안녕? <br />
+        나는 제공해 준 정보를 바탕으로
         <br />
-        맞춤형 학습을 계획해드리는
+        맞춤형 학습을 계획해 주는
         <br />
         <span
           style={{
             color: COLORS.primary[700],
           }}
         >
-          AI 과외 선생님, 구르미에요.
+          AI 과외 선생님, 구르미야.
         </span>
       </TitleBox>
       <motion.div
