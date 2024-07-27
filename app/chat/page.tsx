@@ -310,8 +310,8 @@ const ChatPage = () => {
             type: 'selection',
           },
         ]);
-      }, 1200);
-    }, 3500);
+      }, 500);
+    }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

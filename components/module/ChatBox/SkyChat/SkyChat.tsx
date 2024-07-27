@@ -23,6 +23,10 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
   ({ chat, data, type, onSelectionSubmit, isLoading }, ref) => {
     const textArray = chat.split('\n').map((line, index) => line.trim());
 
+    while (textArray.length > 0 && textArray[textArray.length - 1] === '') {
+      textArray.pop();
+    }
+
     if (isLoading) {
       return (
         <Container
@@ -304,6 +308,16 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             </Container>
           );
         case 'teacher':
+          // 뒤에서부터 빈 문자열 제거
+          const teacherList = data[0].response
+            .split('\n')
+            .map((res: string) => res.trim());
+          while (
+            teacherList.length > 0 &&
+            teacherList[teacherList.length - 1] === ''
+          ) {
+            teacherList.pop();
+          }
           return (
             <Container
               style={{
@@ -316,9 +330,9 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               ref={ref}
             >
               <Typewriter
-                textArray={data[0].response
-                  .split('\n')
-                  .map((res: string) => res.trim())}
+                typingSpeed={20}
+                // 마지막에 오는 ''은 삭제
+                textArray={teacherList}
               />
               {/* <Button
                 onClick={() => {
@@ -340,7 +354,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               }}
               ref={ref}
             >
-              <Typewriter textArray={[chat]} />
+              <Typewriter typingSpeed={20} textArray={textArray} />
               {/* {data.map((item, index) => (
                 <div key={index}>{item.title}</div>
               ))} */}
@@ -363,7 +377,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
         }}
         ref={ref}
       >
-        <Typewriter textArray={textArray} />
+        <Typewriter typingSpeed={20} textArray={textArray} />
       </Container>
     );
   },
