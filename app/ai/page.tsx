@@ -43,7 +43,7 @@ const AiPage = () => {
       const { examYear, subject, currentScore, targetUniversity } =
         flowProps.flowContext;
 
-      const pathname = `/sky/ai/${examYear}/${subject}/${currentScore}/${targetUniversity}`;
+      const pathname = `/sky/ai/${examYear}/${subject}/${currentScore || '3등급'}/${targetUniversity}`;
       const response = await customAxios.get(pathname).then((res) => res.data);
       setData(response);
     } catch (error) {
@@ -237,7 +237,7 @@ export default AiPage;
 const Main = styled.main`
   width: 100%;
   display: flex;
-  min-height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;

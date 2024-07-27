@@ -29,7 +29,7 @@ export default function Home() {
 const Main = styled.main`
   width: 100%;
   display: flex;
-  min-height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;

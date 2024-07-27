@@ -9,7 +9,7 @@ export default function NotFound() {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        height: '100vh',
+        height: 'calc(var(--vh, 1vh) * 100)',
       }}
     >
       <div
