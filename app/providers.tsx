@@ -28,6 +28,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     if (document.body.getAttribute('style') === '') {
       document.body.removeAttribute('style');
     }
+
     // 뷰포트 높이를 계산하고 해당 값을 사용하여 요소의 스타일을 업데이트하는 함수
     function adjustViewportHeight() {
       const vh = window.innerHeight * 0.01;
@@ -37,12 +38,25 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     // 뷰포트 높이를 계산하는 함수를 실행
     adjustViewportHeight();
 
-    // 뷰포트 높이를 계산하는 함수를 resize 이벤트에 바인딩
+    // 뷰포트 높이를 계산하는 함수를 resize와 orientationchange 이벤트에 바인딩
     window.addEventListener('resize', adjustViewportHeight);
+    window.addEventListener('orientationchange', adjustViewportHeight);
+
+    // iOS 키보드 문제를 해결하기 위해 focus와 blur 이벤트 처리
+    const inputs = document.querySelectorAll('input, textarea');
+    inputs.forEach((input) => {
+      input.addEventListener('focus', adjustViewportHeight);
+      input.addEventListener('blur', adjustViewportHeight);
+    });
 
     // 이벤트를 제거하는 함수를 반환
     return () => {
       window.removeEventListener('resize', adjustViewportHeight);
+      window.removeEventListener('orientationchange', adjustViewportHeight);
+      inputs.forEach((input) => {
+        input.removeEventListener('focus', adjustViewportHeight);
+        input.removeEventListener('blur', adjustViewportHeight);
+      });
     };
   }, []);
 
