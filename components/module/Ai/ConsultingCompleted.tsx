@@ -12,6 +12,7 @@ import PlanCard from '../Card/PlanCard';
 import RadioToggle from '@/components/element/radio/RadioToggle';
 import customAxios from '@/lib/axios';
 import toast from 'react-hot-toast';
+import ConfettiComponent from '@/components/effect/Confetti';
 
 type ConsultingCompletedProps = {
   state: FlowState;
@@ -27,6 +28,7 @@ const ConsultingCompleted = ({
   const ref = useRef<SwiperRef>(null);
   const [toggle, setToggle] = useState<'recommend' | 'plan'>('recommend');
   const [teacherName, setTeacherName] = useState<Teacher | null>(null);
+  const [timer, setTimer] = useState<number>(0);
 
   const teacherRefresh = async () => {
     if (!data.resultId) {
@@ -57,8 +59,19 @@ const ConsultingCompleted = ({
       setTeacherName(data.teacherName);
     }
   }, [data.teacherName]);
+
+  // 10초가 지나면 confetti가 사라집니다.
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimer((prev) => prev + 1);
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
   return (
     <Wrapper>
+      {timer < 10 && <ConfettiComponent />}
       <TitleBox
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
