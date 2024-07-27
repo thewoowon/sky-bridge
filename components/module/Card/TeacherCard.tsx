@@ -3,10 +3,20 @@ import Image from 'next/image';
 import styled from '@emotion/styled';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
+import { getTeacherInfo } from '@/utils/getTeacherInfo';
 
-const TeacherCard = () => {
+type TeacherCardProps = {
+  teacherName: Teacher;
+  onRefresh?: () => void;
+};
+
+const TeacherCard = ({ teacherName, onRefresh }: TeacherCardProps) => {
+  const cdn = getTeacher(teacherName as Teacher) || '';
+  const { subtitle, theme, decoration } = getTeacherInfo(
+    teacherName as Teacher,
+  );
   return (
-    <Container>
+    <Container theme={theme}>
       <div
         style={{
           display: 'flex',
@@ -21,7 +31,7 @@ const TeacherCard = () => {
             textAlign: 'center',
           }}
         >
-          현우진 강사님
+          {teacherName} 강사님
         </div>
         <div
           style={{
@@ -29,9 +39,12 @@ const TeacherCard = () => {
             ...TYPOGRAPHY.body['medium2'],
           }}
         >
-          “시작부터 끝까지!
-          <br />
-          수학은 누구나 현우진”
+          {subtitle.split('\n').map((line, index) => (
+            <span key={index}>
+              {line}
+              <br />
+            </span>
+          ))}
         </div>
       </div>
       <div
@@ -44,7 +57,7 @@ const TeacherCard = () => {
         }}
       >
         <Image
-          src={getTeacher('현우진')}
+          src={cdn}
           alt="현우진"
           fill
           style={{
@@ -108,8 +121,8 @@ const TeacherCard = () => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(183.503 3.99996) rotate(113.288) scale(366.54 1001.51)"
           >
-            <stop stopColor="#748FEE" />
-            <stop offset="0.491828" stopColor="#A0B3F3" stopOpacity="0" />
+            <stop stopColor={decoration[0]} />
+            <stop offset="0.491828" stopColor={decoration[1]} stopOpacity="0" />
           </radialGradient>
         </defs>
       </svg>
@@ -159,12 +172,12 @@ const TeacherCard = () => {
             gradientUnits="userSpaceOnUse"
             gradientTransform="translate(28.4776 3.99999) rotate(106.616) scale(159.936 436.999)"
           >
-            <stop stopColor="#748FEE" />
-            <stop offset="0.491828" stopColor="#A0B3F3" stopOpacity="0" />
+            <stop stopColor={decoration[0]} />
+            <stop offset="0.491828" stopColor={decoration[1]} stopOpacity="0" />
           </radialGradient>
         </defs>
       </svg>
-      <RefreshButton>
+      <RefreshButton onClick={onRefresh}>
         <svg
           width="24"
           height="24"
@@ -186,12 +199,22 @@ const TeacherCard = () => {
 
 export default TeacherCard;
 
-const Container = styled.div`
+const Container = styled.div<{
+  theme?: string;
+}>`
   max-width: 387px;
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  background-color: ${COLORS.secondary[600]};
+  background-color: ${({ theme }) => {
+    if (theme === 'lime') {
+      return COLORS.secondary[600];
+    } else if (theme === 'blueberry') {
+      return COLORS.primary[400];
+    } else {
+      return '#FFE96F';
+    }
+  }};
   display: flex;
   flex-direction: column;
   justify-content: space-between;

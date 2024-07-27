@@ -10,6 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 import TeacherCard from '../Card/TeacherCard';
 import PlanCard from '../Card/PlanCard';
 import RadioToggle from '@/components/element/radio/RadioToggle';
+import customAxios from '@/lib/axios';
+import toast from 'react-hot-toast';
 
 type ConsultingCompletedProps = {
   state: FlowState;
@@ -24,6 +26,24 @@ const ConsultingCompleted = ({
 }: ConsultingCompletedProps) => {
   const ref = useRef<SwiperRef>(null);
   const [toggle, setToggle] = useState<'recommend' | 'plan'>('recommend');
+  const [teacherName, setTeacherName] = useState<Teacher | null>(null);
+
+  const teacherRefresh = async () => {
+    if (!data.resultId) {
+      toast.error('강사 정보를 불러올 수 없습니다.');
+      return;
+    }
+    const response = await customAxios
+      .get(`/sky/reloadTeacher/${data.resultId}`, {})
+      .then((res) => res.data);
+
+    if (!response) {
+      toast.error('강사 정보를 불러올 수 없습니다.');
+      return;
+    }
+    setTeacherName(response);
+    toast.success('강사 정보를 성공적으로 불러왔습니다.');
+  };
 
   useEffect(() => {
     if (ref.current) {
@@ -31,6 +51,12 @@ const ConsultingCompleted = ({
       else ref.current.swiper.slideTo(1);
     }
   }, [toggle]);
+
+  useEffect(() => {
+    if (data.teacherName) {
+      setTeacherName(data.teacherName);
+    }
+  }, [data.teacherName]);
   return (
     <Wrapper>
       <TitleBox
@@ -97,7 +123,10 @@ const ConsultingCompleted = ({
               alignItems: 'center',
             }}
           >
-            <TeacherCard />
+            <TeacherCard
+              teacherName={teacherName || '현우진'}
+              onRefresh={teacherRefresh}
+            />
           </SwiperSlide>
           <SwiperSlide
             style={{

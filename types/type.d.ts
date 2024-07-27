@@ -44,3 +44,14 @@ type FlowContext = {
   currentScore?: number;
   targetUniversity?: string;
 };
+
+type Teacher =
+  | '현우진'
+  | '이명학'
+  | '김동욱'
+  | '신승범'
+  | '조정식'
+  | '윤혜정'
+  | '정승제'
+  | '주혜연'
+  | '김민정';
