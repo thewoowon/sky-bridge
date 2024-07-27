@@ -371,7 +371,8 @@ const Main = styled.main`
   padding-top: 57px;
   padding-bottom: 88px;
   background-color: ${COLORS.grayscale[50]};
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;

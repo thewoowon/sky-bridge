@@ -64,7 +64,8 @@ const Main = styled.main`
   align-items: center;
   justify-content: flex-start;
   padding: 0 0 124px 0;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;

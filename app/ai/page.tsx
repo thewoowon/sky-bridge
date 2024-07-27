@@ -247,7 +247,8 @@ const Main = styled.main`
     rgba(109, 129, 200, 0.5) 0%,
     rgba(227, 253, 111, 0.3) 100%
   );
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;

@@ -29,7 +29,7 @@ export default function Home() {
 const Main = styled.main`
   width: 100%;
   display: flex;
-  height: calc(var(--vh, 1vh) * 100);
+  height: calc(var(--vh, 1vh) * 100),
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -37,7 +37,8 @@ const Main = styled.main`
   padding-bottom: 154px;
   background-color: ${COLORS.grayscale[50]};
   gap: 28px;
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   &::-webkit-scrollbar {
     display: none;
