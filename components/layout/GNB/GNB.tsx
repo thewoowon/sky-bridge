@@ -18,7 +18,7 @@ const GNB = () => {
       <GNBItem
         selected={pathName === '/chat'}
         onClick={() => {
-          router.push('/chat');
+          window.location.href = '/chat';
         }}
       >
         <FrontHand />
@@ -27,7 +27,7 @@ const GNB = () => {
       <GNBItem
         selected={pathName === '/'}
         onClick={() => {
-          router.push('/');
+          window.location.href = '/';
         }}
       >
         <Graduation />
@@ -36,7 +36,7 @@ const GNB = () => {
       <GNBItem
         selected={pathName.startsWith('/ai')}
         onClick={() => {
-          router.push('/ai');
+          window.location.href = '/ai';
         }}
       >
         <Cloud />
