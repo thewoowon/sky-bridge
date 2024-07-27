@@ -4,6 +4,8 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 
 const NewsItem = ({ news }: { news: News }) => {
+  // 0 또는 1을 랜덤 생성
+  const random = Math.floor(Math.random() * 2);
   return (
     <Container>
       <div
@@ -20,6 +22,21 @@ const NewsItem = ({ news }: { news: News }) => {
           window.open(news.link, '_blank');
         }}
       >
+        <div
+          style={{
+            position: 'absolute',
+            top: '5px',
+            left: '3px',
+            ...TYPOGRAPHY.body['small2'],
+            color: random ? '#7964F4' : '#F84B70',
+            backgroundColor: random ? '#F3F1FD' : '#FDF0F3',
+            zIndex: 1,
+            borderRadius: '23px',
+            padding: '0 6px',
+          }}
+        >
+          {random ? '수시' : '정시'}
+        </div>
         <Image src={news.src} alt={news.title} fill priority sizes="58" />
       </div>
       <div
