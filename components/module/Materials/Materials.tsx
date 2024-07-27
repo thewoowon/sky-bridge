@@ -163,11 +163,13 @@ const Button = styled.div`
     background-color: ${COLORS.grayscale[100]};
   }
 
-  &:active {
-    svg {
-      transform: translateX(0);
-    }
+  @media (pointer: coarse) {
+    &:hover {
+      svg {
+        transform: translateX(0);
+      }
 
-    background-color: white;
+      background-color: white;
+    }
   }
 `;
