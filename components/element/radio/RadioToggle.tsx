@@ -70,19 +70,19 @@ const Highlight = styled.div<{ position: 'recommend' | 'plan' }>`
   position: absolute;
   top: 4px;
   left: 4px;
-  width: ${({ position }) => (position === 'recommend' ? '43%' : '58%')};
+  width: ${({ position }) => (position === 'recommend' ? '41%' : '56%')};
   height: 34px;
   background-color: ${COLORS.primary[500]};
   border-radius: 26px;
   transition: transform 0.2s ease-in-out;
 
   transform: ${({ position }) =>
-    position === 'recommend' ? 'translateX(0)' : 'translateX(66%)'};
+    position === 'recommend' ? 'translateX(0)' : 'translateX(72%)'};
 `;
 
 const RadioButtons = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 28px;
   position: relative;
   z-index: 2;
 `;
