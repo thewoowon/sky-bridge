@@ -162,4 +162,12 @@ const Button = styled.div`
 
     background-color: ${COLORS.grayscale[100]};
   }
+
+  &:active {
+    svg {
+      transform: translateX(0);
+    }
+
+    background-color: white;
+  }
 `;
