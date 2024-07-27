@@ -320,13 +320,14 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                   .split('\n')
                   .map((res: string) => res.trim())}
               />
-              <Button
+              {/* <Button
                 onClick={() => {
                   window.open(data[0].link, '_blank');
                 }}
+                disabled
               >
                 자세히 보기
-              </Button>
+              </Button> */}
             </Container>
           );
         case 'guideline':
@@ -339,9 +340,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               }}
               ref={ref}
             >
-              <Typewriter
-                textArray={['준비 중인 기능이에요.', '조금만 기다려주세요! 🙇‍♂️']}
-              />
+              <Typewriter textArray={[chat]} />
               {/* {data.map((item, index) => (
                 <div key={index}>{item.title}</div>
               ))} */}

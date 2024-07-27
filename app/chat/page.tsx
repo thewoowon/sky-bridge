@@ -96,66 +96,101 @@ const ChatPage = () => {
       // 수리논술 젤 잘 가르치는 강사는 누구야?
       case 0:
         try {
-          const response = await customAxios({
-            method: 'get',
-            url: `/chat/quest/${SELECTION[id].title}`,
-            responseType: 'text',
-            headers: {
-              Accept: 'text/event-stream',
-            },
-          });
-
-          response.data.on('data', (chunk: Buffer) => {
-            console.log('chunk:', chunk.toString());
-          });
-
-          response.data.on('end', () => {
-            console.log('Stream ended');
-          });
-        } catch (error) {
-          console.error('Error fetching stream data:', error);
-        }
-        setChatContext([
-          ...chatContext,
-          {
-            chat: SELECTION[id].title,
-            role: 'user',
-          },
-          {
-            chat: '',
-            role: 'sky',
-            type: 'teacher',
-            data: [
-              {
-                response:
-                  "2023년 기준으로 수리논술을 가장 잘 가르치는 강사는 '현우진' 이야.\n이는 메가스터디, 이투스, 대성마이맥의 리뷰를 참고했어.",
-                link: 'https://www.naver.com',
+          const response = await fetch(
+            `https://api.skybrg.io/chat/quest/${SELECTION[id].title}`,
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'text/event-stream',
               },
-            ],
-          },
-        ]);
+            },
+          );
+
+          if (response.ok) {
+            const reader = response.body?.getReader();
+            const decoder = new TextDecoder();
+            let result;
+
+            while (reader && !(result = await reader.read()).done) {
+              const chunk = decoder.decode(result.value, { stream: true });
+              setChatContext([
+                ...chatContext,
+                {
+                  chat: SELECTION[id].title,
+                  role: 'user',
+                },
+                {
+                  chat: '',
+                  role: 'sky',
+                  type: 'teacher',
+                  data: [
+                    {
+                      response: chunk.replaceAll('data:', ''),
+                      link: 'https://www.naver.com',
+                    },
+                  ],
+                },
+              ]);
+            }
+          } else {
+            console.error(
+              '스트림 통신 중에 오류거 발생했어요:',
+              response.statusText,
+            );
+          }
+        } catch (error) {
+          console.error('스트림 통신 중에 오류거 발생했어요:', error);
+        }
+
         break;
       // 현우진 vs 정승제, 누구 강의가 더 좋아?
       case 1:
-        setChatContext([
-          ...chatContext,
-          {
-            chat: SELECTION[id].title,
-            role: 'user',
-          },
-          {
-            chat: '',
-            role: 'sky',
-            type: 'teacher',
-            data: [
-              {
-                response:
-                  "2023년 기준으로 '현우진' 강사의 강의가 더 좋아.\n이는 메가스터디, 이투스, 대성마이맥의 리뷰를 참고했어.",
-                link: 'https://www.naver.com',
+        try {
+          const response = await fetch(
+            `https://api.skybrg.io/chat/quest/${SELECTION[id].title}`,
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'text/event-stream',
               },
-            ],
-          },
-        ]);
+            },
+          );
+
+          if (response.ok) {
+            const reader = response.body?.getReader();
+            const decoder = new TextDecoder();
+            let result;
+
+            while (reader && !(result = await reader.read()).done) {
+              const chunk = decoder.decode(result.value, { stream: true });
+              setChatContext([
+                ...chatContext,
+                {
+                  chat: SELECTION[id].title,
+                  role: 'user',
+                },
+                {
+                  chat: '',
+                  role: 'sky',
+                  type: 'teacher',
+                  data: [
+                    {
+                      response: chunk.replaceAll('data:', ''),
+                      link: 'https://www.naver.com',
+                    },
+                  ],
+                },
+              ]);
+            }
+          } else {
+            console.error(
+              '스트림 통신 중에 오류거 발생했어요:',
+              response.statusText,
+            );
+          }
+        } catch (error) {
+          console.error('스트림 통신 중에 오류거 발생했어요:', error);
+        }
         break;
       // 올해 입시일정은 어떻게 돼?
       case 2:
@@ -179,19 +214,49 @@ const ChatPage = () => {
         break;
       // 고려대 중어중문과 입시요강을 알려줘
       case 3:
-        setChatContext([
-          ...chatContext,
-          {
-            chat: SELECTION[id].title,
-            role: 'user',
-          },
-          {
-            chat: '',
-            role: 'sky',
-            type: 'guideline',
-            data: [],
-          },
-        ]);
+        try {
+          const response = await fetch(
+            `https://api.skybrg.io/chat/quest/${SELECTION[id].title}`,
+            {
+              method: 'GET',
+              headers: {
+                Accept: 'text/event-stream',
+              },
+            },
+          );
+
+          if (response.ok) {
+            const reader = response.body?.getReader();
+            const decoder = new TextDecoder();
+            let result;
+
+            while (reader && !(result = await reader.read()).done) {
+              const chunk = decoder.decode(result.value, { stream: true });
+              // 스트림 데이터 처리
+              setChatContext([
+                ...chatContext,
+                {
+                  chat: SELECTION[id].title,
+                  role: 'user',
+                },
+                {
+                  chat: chunk.replaceAll('data:', ''),
+                  role: 'sky',
+                  type: 'guideline',
+                  data: [],
+                },
+              ]);
+            }
+          } else {
+            console.error(
+              '스트림 통신 중에 오류거 발생했어요:',
+              response.statusText,
+            );
+          }
+        } catch (error) {
+          console.error('스트림 통신 중에 오류거 발생했어요:', error);
+        }
+
         break;
       // 수1, 수2 1티어 문제집을 알려줘
       case 4:
