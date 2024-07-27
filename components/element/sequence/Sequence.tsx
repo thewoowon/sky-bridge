@@ -2,6 +2,7 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import '@styles/sequence-loader.css';
+import { motion } from 'framer-motion';
 
 const texts = [
   '기다리는 동안 퀴즈 하나 맞혀볼래?\n일희일비(一喜一悲)"의 뜻은 무엇일까?',
@@ -51,7 +52,18 @@ const Sequence = ({ isLoading }: SequenceProps) => {
         }}
       >
         {texts[index].split('\n').map((text, i) => (
-          <div key={i}>{text}</div>
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3 }}
+            style={{
+              ...TYPOGRAPHY.title['large'],
+            }}
+            key={i}
+          >
+            {text}
+          </motion.div>
         ))}
       </div>
     </div>
