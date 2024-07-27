@@ -56,76 +56,77 @@ const PlanCard = ({ planList, sessionId }: PlanCardProps) => {
   return (
     <Container>
       <ScheduleBox>
-        {planList.map((plan, index) => (
-          <div
-            key={index}
-            style={{
-              width: '100%',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '7px',
-            }}
-          >
+        {Array.isArray(planList) &&
+          planList?.map((plan, index) => (
             <div
+              key={index}
               style={{
-                ...TYPOGRAPHY.body['medium1'],
-                textAlign: 'center',
-                backgroundColor: COLORS.primary[50],
-                color: COLORS.primary[600],
-                borderRadius: '10px',
-                padding: '3px 9px',
+                width: '100%',
                 display: 'flex',
-                justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column',
-                width: '82px',
-                height: '52px',
+                justifyContent: 'center',
+                gap: '7px',
               }}
             >
-              <div>{plan.startDate}</div>
               <div
                 style={{
-                  padding: '1px 0',
+                  ...TYPOGRAPHY.body['medium1'],
+                  textAlign: 'center',
+                  backgroundColor: COLORS.primary[50],
+                  color: COLORS.primary[600],
+                  borderRadius: '10px',
+                  padding: '3px 9px',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                  width: '82px',
+                  height: '52px',
                 }}
               >
-                <svg
-                  width="5"
-                  height="2"
-                  viewBox="0 0 5 2"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div>{plan.startDate}</div>
+                <div
+                  style={{
+                    padding: '1px 0',
+                  }}
                 >
-                  <path
-                    d="M4.72852 0.282227V1.71777H0.271484V0.282227H4.72852Z"
-                    fill="#6178C8"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    width="5"
+                    height="2"
+                    viewBox="0 0 5 2"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M4.72852 0.282227V1.71777H0.271484V0.282227H4.72852Z"
+                      fill="#6178C8"
+                    />
+                  </svg>
+                </div>
 
-              <div>{plan.endDate}</div>
+                <div>{plan.endDate}</div>
+              </div>
+              <div
+                style={{
+                  ...TYPOGRAPHY.body['medium1'],
+                  flex: 1,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  backgroundColor: COLORS.grayscale[50],
+                  height: '52px',
+                  borderRadius: '10px',
+                  padding: '0 10px',
+                  // text overflow ellipsis
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                }}
+              >
+                {plan.title}
+              </div>
             </div>
-            <div
-              style={{
-                ...TYPOGRAPHY.body['medium1'],
-                flex: 1,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'flex-start',
-                backgroundColor: COLORS.grayscale[50],
-                height: '52px',
-                borderRadius: '10px',
-                padding: '0 10px',
-                // text overflow ellipsis
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
-              {plan.title}
-            </div>
-          </div>
-        ))}
+          ))}
       </ScheduleBox>
       <div
         style={{
