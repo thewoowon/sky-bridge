@@ -139,6 +139,19 @@ const ConsultingCompleted = ({
           </SwiperSlide>
         </Swiper>
       </div>
+      <div
+        onClick={() => {
+          window.location.href = '/ai';
+        }}
+        style={{
+          color: COLORS.primary[500],
+          textDecoration: 'none',
+          ...TYPOGRAPHY.body['medium1'],
+          cursor: 'pointer',
+        }}
+      >
+        처음으로 돌아가기
+      </div>
     </Wrapper>
   );
 };
