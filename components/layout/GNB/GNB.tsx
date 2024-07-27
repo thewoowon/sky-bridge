@@ -34,7 +34,7 @@ const GNB = () => {
         입시 소식
       </GNBItem>
       <GNBItem
-        selected={pathName === '/ai'}
+        selected={pathName.startsWith('/ai')}
         onClick={() => {
           router.push('/ai');
         }}
