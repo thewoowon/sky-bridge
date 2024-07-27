@@ -30,7 +30,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 57px 16px 88px 16px;
+  padding: 57px 16px 124px 16px;
   background: linear-gradient(
     180deg,
     rgba(109, 129, 200, 0.5) 0%,
