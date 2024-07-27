@@ -8,12 +8,17 @@ import { useEffect, useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCompletion } from 'ai/react';
 import { debounce } from 'lodash';
+import customAxios from '@/lib/axios';
+import useBackgroundColorStore from '@/store/useBackgroundColorStore';
+import useHeaderStore from '@/store/useHeaderStore';
 
 type FormType = {
   chat: string;
 };
 
 const ChatPage = () => {
+  const { change } = useHeaderStore();
+
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [chatContext, setChatContext] = useState<
@@ -74,6 +79,7 @@ const ChatPage = () => {
         chat: '',
         role: 'sky',
         type: 'teacher',
+        // loading이라서 안보임...
         data: [
           {
             response:
@@ -86,113 +92,131 @@ const ChatPage = () => {
     ]);
     setIsLoading(true);
 
-    await setTimeout(async () => {
-      switch (id) {
-        // 수리논술 젤 잘 가르치는 강사는 누구야?
-        case 0:
-          setChatContext([
-            ...chatContext,
-            {
-              chat: SELECTION[id].title,
-              role: 'user',
+    switch (id) {
+      // 수리논술 젤 잘 가르치는 강사는 누구야?
+      case 0:
+        try {
+          const response = await customAxios({
+            method: 'get',
+            url: `/chat/quest/${SELECTION[id].title}`,
+            responseType: 'text',
+            headers: {
+              Accept: 'text/event-stream',
             },
-            {
-              chat: '',
-              role: 'sky',
-              type: 'teacher',
-              data: [
-                {
-                  response:
-                    "2023년 기준으로 수리논술을 가장 잘 가르치는 강사는 '현우진' 이야.\n이는 메가스터디, 이투스, 대성마이맥의 리뷰를 참고했어.",
-                  link: 'https://www.naver.com',
-                },
-              ],
-            },
-          ]);
-          break;
-        // 현우진 vs 정승제, 누구 강의가 더 좋아?
-        case 1:
-          setChatContext([
-            ...chatContext,
-            {
-              chat: SELECTION[id].title,
-              role: 'user',
-            },
-            {
-              chat: '',
-              role: 'sky',
-              type: 'teacher',
-              data: [
-                {
-                  response:
-                    "2023년 기준으로 '현우진' 강사의 강의가 더 좋아.\n이는 메가스터디, 이투스, 대성마이맥의 리뷰를 참고했어.",
-                  link: 'https://www.naver.com',
-                },
-              ],
-            },
-          ]);
-          break;
-        // 올해 입시일정은 어떻게 돼?
-        case 2:
-          setChatContext([
-            ...chatContext,
-            {
-              chat: SELECTION[id].title,
-              role: 'user',
-            },
-            {
-              chat: '올해 입시일정이야',
-              role: 'sky',
-            },
-            {
-              chat: '',
-              role: 'sky',
-              type: 'schedule',
-              data: THIS_YEAR_SCHEDULE,
-            },
-          ]);
-          break;
-        // 고려대 중어중문과 입시요강을 알려줘
-        case 3:
-          setChatContext([
-            ...chatContext,
-            {
-              chat: SELECTION[id].title,
-              role: 'user',
-            },
-            {
-              chat: '',
-              role: 'sky',
-              type: 'guideline',
-              data: [],
-            },
-          ]);
-          break;
-        // 수1, 수2 1티어 문제집을 알려줘
-        case 4:
-          setChatContext([
-            ...chatContext,
-            {
-              chat: SELECTION[id].title,
-              role: 'user',
-            },
-            {
-              chat: `2024년 1월 1일부터 ${new Date().getUTCDate()}일 기준 수능기출문제집 수학영역 종합베스트야.`,
-              role: 'sky',
-            },
-            {
-              chat: '',
-              role: 'sky',
-              type: 'workbook',
-              data: WORKBOOKS,
-            },
-          ]);
-          break;
-        default:
-          break;
-      }
-      setIsLoading(false);
-    }, 2000);
+          });
+
+          response.data.on('data', (chunk: Buffer) => {
+            console.log('chunk:', chunk.toString());
+          });
+
+          response.data.on('end', () => {
+            console.log('Stream ended');
+          });
+        } catch (error) {
+          console.error('Error fetching stream data:', error);
+        }
+        setChatContext([
+          ...chatContext,
+          {
+            chat: SELECTION[id].title,
+            role: 'user',
+          },
+          {
+            chat: '',
+            role: 'sky',
+            type: 'teacher',
+            data: [
+              {
+                response:
+                  "2023년 기준으로 수리논술을 가장 잘 가르치는 강사는 '현우진' 이야.\n이는 메가스터디, 이투스, 대성마이맥의 리뷰를 참고했어.",
+                link: 'https://www.naver.com',
+              },
+            ],
+          },
+        ]);
+        break;
+      // 현우진 vs 정승제, 누구 강의가 더 좋아?
+      case 1:
+        setChatContext([
+          ...chatContext,
+          {
+            chat: SELECTION[id].title,
+            role: 'user',
+          },
+          {
+            chat: '',
+            role: 'sky',
+            type: 'teacher',
+            data: [
+              {
+                response:
+                  "2023년 기준으로 '현우진' 강사의 강의가 더 좋아.\n이는 메가스터디, 이투스, 대성마이맥의 리뷰를 참고했어.",
+                link: 'https://www.naver.com',
+              },
+            ],
+          },
+        ]);
+        break;
+      // 올해 입시일정은 어떻게 돼?
+      case 2:
+        setChatContext([
+          ...chatContext,
+          {
+            chat: SELECTION[id].title,
+            role: 'user',
+          },
+          {
+            chat: '올해 입시일정이야',
+            role: 'sky',
+          },
+          {
+            chat: '',
+            role: 'sky',
+            type: 'schedule',
+            data: THIS_YEAR_SCHEDULE,
+          },
+        ]);
+        break;
+      // 고려대 중어중문과 입시요강을 알려줘
+      case 3:
+        setChatContext([
+          ...chatContext,
+          {
+            chat: SELECTION[id].title,
+            role: 'user',
+          },
+          {
+            chat: '',
+            role: 'sky',
+            type: 'guideline',
+            data: [],
+          },
+        ]);
+        break;
+      // 수1, 수2 1티어 문제집을 알려줘
+      case 4:
+        setChatContext([
+          ...chatContext,
+          {
+            chat: SELECTION[id].title,
+            role: 'user',
+          },
+          {
+            chat: `2024년 1월 1일부터 ${new Date().getUTCDate()}일 기준 수능기출문제집 수학영역 종합베스트야.`,
+            role: 'sky',
+          },
+          {
+            chat: '',
+            role: 'sky',
+            type: 'workbook',
+            data: WORKBOOKS,
+          },
+        ]);
+        break;
+      default:
+        break;
+    }
+    setIsLoading(false);
   };
 
   const debounceOnSelectionSubmit = debounce(onSelectionSubmit, 300);
@@ -231,6 +255,10 @@ const ChatPage = () => {
       scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, 100);
   }, [chatContext]);
+
+  useEffect(() => {
+    change('block');
+  }, [change]);
 
   return (
     <Main>

@@ -2,12 +2,17 @@ import Logo from '@/components/svg/Logo';
 import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import styled from '@emotion/styled';
 
-const Header = () => {
+type HeaderProps = {
+  display: 'none' | 'block';
+};
+
+const Header = ({ display }: HeaderProps) => {
   const { backgroundColor } = useBackgroundColorStore();
   return (
     <Container
       style={{
         backgroundColor,
+        display,
       }}
     >
       <Logo />

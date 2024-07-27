@@ -20,11 +20,13 @@ import 'swiper/css/pagination';
 import '@styles/snap-swiper.css';
 import useWarnOnUnload from '@/hooks/useWarnOnUnload';
 import customAxios from '@/lib/axios';
+import useHeaderStore from '@/store/useHeaderStore';
 
 const YEAR_LIST = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
 const AiPage = () => {
   const { changeBackgroundColor } = useBackgroundColorStore();
+  const { change } = useHeaderStore();
   const { flowState, ...flowProps } = useFlow();
   const [data, setData] = useState([]);
   const [generateLoading, setGenerateLoading] = useState(false);
@@ -108,9 +110,8 @@ const AiPage = () => {
 
   useEffect(() => {
     changeBackgroundColor('transparent');
-    // es린트 무시
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    change('block');
+  }, [changeBackgroundColor, change]);
 
   if (generateLoading) {
     return (
@@ -126,7 +127,7 @@ const AiPage = () => {
 
   return (
     <Main>
-      {flowState !== 'idle' && (
+      {flowState !== 'idle' && flowState !== 'consulting_completed' && (
         <BackButton
           onClick={() => {
             flowProps.back();
