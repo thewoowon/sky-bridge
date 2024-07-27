@@ -8,6 +8,7 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
   --swiper-pagination-bottom: 0;
+  --vh: 1vh; /* 초기값 설정 */
 }
 
 html,
@@ -30,6 +31,11 @@ body {
     sans-serif !important;
   color: rgb(var(--foreground-rgb));
   scroll-behavior: smooth;
+}
+
+body {
+  height: calc(var(--vh, 1vh) * 100);
+  /* 다른 스타일들 */
 }
 
 @layer utilities {

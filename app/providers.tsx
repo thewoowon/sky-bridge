@@ -69,14 +69,13 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            height: '100vh',
+            height: 'calc(var(--vh, 1vh) * 100)', // height를 계산된 뷰포트 높이로 설정
             position: 'relative',
-            overflow: 'hidden',
             maxWidth: '480px',
-            minWidth: '375px',
             width: '100%',
             margin: '0 auto',
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+            overflow: 'auto', // overflow를 auto로 변경
           }}
         >
           {loading && <div>로딩 중...</div>}

@@ -17,6 +17,7 @@ type FormType = {
 };
 
 const ChatPage = () => {
+  const { changeBackgroundColor } = useBackgroundColorStore();
   const { change } = useHeaderStore();
 
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -322,8 +323,9 @@ const ChatPage = () => {
   }, [chatContext]);
 
   useEffect(() => {
+    changeBackgroundColor('#F8F9FA');
     change('block');
-  }, [change]);
+  }, [changeBackgroundColor, change]);
 
   return (
     <Main>
