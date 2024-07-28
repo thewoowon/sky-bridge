@@ -3,13 +3,14 @@ import Bounce from '@/components/element/bounce';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
-import { forwardRef } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '@styles/workbook-swiper.css';
 import Image from 'next/image';
+import { marked } from 'marked';
 
 type SkyChatProps = {
   chat: string;
@@ -27,6 +28,27 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
       textArray.pop();
     }
 
+    const resizeRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+      const handleResize = () => {
+        resizeRef.current?.scrollIntoView({ behavior: 'smooth' });
+      };
+
+      const resizeObserver = new ResizeObserver(handleResize);
+      const currentRef = resizeRef.current;
+
+      if (currentRef) {
+        resizeObserver.observe(currentRef);
+      }
+
+      return () => {
+        if (currentRef) {
+          resizeObserver.unobserve(currentRef);
+        }
+      };
+    }, []);
+
     if (isLoading) {
       return (
         <Container
@@ -35,7 +57,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             fontWeight: 400,
             color: 'black',
           }}
-          ref={ref}
+          ref={resizeRef}
         >
           <Bounce />
         </Container>
@@ -52,7 +74,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               fontWeight: 400,
               color: 'black',
             }}
-            ref={ref}
+            ref={resizeRef}
           >
             <div>개발자에게 문의해주세요</div>
           </Container>
@@ -69,7 +91,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 color: 'black',
                 gap: '8px',
               }}
-              ref={ref}
+              ref={resizeRef}
             >
               {data.map((item, index) => (
                 <SelectionBox
@@ -106,7 +128,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 fontWeight: 400,
                 color: 'black',
               }}
-              ref={ref}
+              ref={resizeRef}
             >
               <Swiper
                 slidesPerView={'auto'}
@@ -185,7 +207,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 color: 'black',
                 gap: '30px',
               }}
-              ref={ref}
+              ref={resizeRef}
             >
               {data.map((item, index) => (
                 <div
@@ -327,7 +349,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 maxWidth: '289px',
                 gap: '12px',
               }}
-              ref={ref}
+              ref={resizeRef}
             >
               <Typewriter
                 typingSpeed={20}
@@ -352,7 +374,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 fontWeight: 400,
                 color: 'black',
               }}
-              ref={ref}
+              ref={resizeRef}
             >
               <Typewriter typingSpeed={20} textArray={textArray} />
               {/* {data.map((item, index) => (
@@ -368,6 +390,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
           );
       }
     }
+
     return (
       <Container
         style={{
@@ -375,7 +398,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
           fontWeight: 400,
           color: 'black',
         }}
-        ref={ref}
+        ref={resizeRef}
       >
         <Typewriter typingSpeed={20} textArray={textArray} />
       </Container>
