@@ -26,6 +26,7 @@
     "ai": "^3.2.34",
     "axios": "^1.7.2",
     "framer-motion": "^11.3.8",
+    "html-react-parser": "^5.1.12",
     "lodash": "^4.17.21",
     "marked": "^13.0.2",
     "next": "14.2.5",
