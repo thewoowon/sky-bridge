@@ -36,6 +36,13 @@ body {
 body {
   height: calc(var(--vh, 1vh) * 100);
   /* 다른 스타일들 */
+  background: linear-gradient(45deg, #666666 0%, #000000 100%);
+}
+
+@media (min-width: 960px) {
+  .root-container {
+    transform: translateX(50%); /* 뷰포트가 넓어질수록 오른쪽으로 이동 */
+  }
 }
 
 @layer utilities {
@@ -75,4 +82,150 @@ body {
   width: 100%;
   display: flex;
   justify-content: flex-start;
+}
+
+.background-title {
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+}
+
+@media (max-width: 959px) {
+  .background-title {
+    display: none;
+  }
+}
+
+.deco-cloud-1 {
+  z-index: -1;
+  position: absolute;
+  right: 0;
+  top: 40%;
+  transform: translate(30%, -50%);
+  animation: move-cloud-1 2s forwards;
+}
+.deco-cloud-2 {
+  z-index: -1;
+  position: absolute;
+  left: 33%;
+  bottom: 5%;
+  animation: move-cloud-2 2s forwards;
+}
+.deco-cloud-3 {
+  z-index: -1;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform: translate(-30%, 30%);
+  animation: move-cloud-3 2s forwards;
+}
+
+.deco-blur-circle-1 {
+  z-index: -1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  transform: translate(-38%, 25%);
+}
+.deco-blur-circle-2 {
+  z-index: -1;
+  position: absolute;
+  top: 10%;
+  left: 35%;
+  transform: translate(-40%, 0%);
+}
+.deco-star-1 {
+  z-index: -1;
+  position: absolute;
+  animation: twinkle 3s infinite;
+  animation-delay: 0.5s;
+  right: 10%;
+  bottom: 10%;
+  transform: translate(0%, -50%);
+}
+.deco-star-2 {
+  z-index: -1;
+  position: absolute;
+  animation: twinkle 3s infinite;
+  animation-delay: 1s;
+  left: 47%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.deco-star-3 {
+  z-index: -1;
+  position: absolute;
+  animation: twinkle 3s infinite;
+  left: 5%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.deco-twinkle-1 {
+  z-index: -1;
+  position: absolute;
+  animation: twinkle 2s infinite;
+  animation-delay: 1s;
+  bottom: 0;
+  left: 0;
+  transform: translate(-10%, -55%);
+}
+.deco-twinkle-2 {
+  z-index: -1;
+  position: absolute;
+  animation: twinkle 2s infinite;
+  animation-delay: 2s;
+  top: 5%;
+  left: 35%;
+  transform: translate(-40%, 0%);
+}
+.deco-twinkle-3 {
+  z-index: -1;
+  position: absolute;
+  animation: twinkle 2s infinite;
+  top: 10%;
+  right: 10%;
+}
+
+@keyframes move-cloud-1 {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(30%);
+  }
+}
+
+@keyframes move-cloud-2 {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes move-cloud-3 {
+  0% {
+    transform: translate(-100%, 30%);
+  }
+  100% {
+    transform: translate(-30%, 30%);
+  }
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }

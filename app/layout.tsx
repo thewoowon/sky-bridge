@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Providers from './providers';
+import Background from './background';
 
 export const metadata: Metadata = {
   title: '스카이브릿지',
@@ -131,6 +132,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <Background />
         <Providers>{children}</Providers>
       </body>
     </html>

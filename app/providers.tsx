@@ -67,6 +67,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     <>
       <QueryClientProvider client={queryClient}>
         <div
+          className="root-container"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -79,6 +80,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             margin: '0 auto',
             boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
             overflow: 'auto', // overflow를 auto로 변경
+            backgroundColor: '#fff',
           }}
         >
           {loading && <div>로딩 중...</div>}
