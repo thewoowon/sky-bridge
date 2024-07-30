@@ -190,7 +190,23 @@ body {
   top: 10%;
   right: 10%;
 }
-/* 
+
+@media (max-width: 959px) {
+  .deco-cloud-1,
+  .deco-cloud-2,
+  .deco-cloud-3,
+  .deco-blur-circle-1,
+  .deco-blur-circle-2,
+  .deco-star-1,
+  .deco-star-2,
+  .deco-star-3,
+  .deco-twinkle-1,
+  .deco-twinkle-2,
+  .deco-twinkle-3 {
+    display: none;
+  }
+}
+
 @keyframes move-cloud-1 {
   0% {
     transform: translateX(100%);
@@ -228,4 +244,4 @@ body {
   100% {
     opacity: 0;
   }
-} */
+}
