@@ -1,3 +1,5 @@
+import { memo } from 'react';
+
 const DecoStar3 = () => {
   return (
     <svg
@@ -20,4 +22,4 @@ const DecoStar3 = () => {
   );
 };
 
-export default DecoStar3;
+export default memo(DecoStar3);

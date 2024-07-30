@@ -126,13 +126,9 @@ export default function RootLayout({
           name="naver-site-verification"
           content={process.env.NEXT_PUBLIC_NAVER_SITE_VERIFICATION}
         />
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-        />
       </head>
       <body>
-        <Background />
+        {/* <Background /> */}
         <Providers>{children}</Providers>
       </body>
     </html>
