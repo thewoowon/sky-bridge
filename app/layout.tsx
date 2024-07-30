@@ -128,7 +128,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        {/* <Background /> */}
+        <Background />
         <Providers>{children}</Providers>
       </body>
     </html>

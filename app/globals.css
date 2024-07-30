@@ -190,7 +190,7 @@ body {
   top: 10%;
   right: 10%;
 }
-
+/* 
 @keyframes move-cloud-1 {
   0% {
     transform: translateX(100%);
@@ -228,4 +228,4 @@ body {
   100% {
     opacity: 0;
   }
-}
+} */
