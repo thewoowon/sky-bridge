@@ -161,7 +161,13 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                           position: 'relative',
                         }}
                       >
-                        <Image src={item.url} alt={item.title} fill />
+                        <Image
+                          src={item.url}
+                          alt={item.title}
+                          fill
+                          priority
+                          sizes="(max-width: 320px) 165px, 320px"
+                        />
                       </div>
                       <div
                         style={{

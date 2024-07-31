@@ -2,17 +2,19 @@
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import * as gtag from '@/lib/gtag';
 import GNB from '@/components/layout/GNB';
 import Header from '@/components/layout/Header';
 import useLoading from '@/hooks/useLoading';
 import useHeaderStore from '@/store/useHeaderStore';
+import OnBoarding from '@/components/layout/OnBoading';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const loading = useLoading();
   const { display } = useHeaderStore();
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -63,6 +65,14 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     };
   }, []);
 
+  useEffect(() => {
+    const visit = localStorage.getItem('visit');
+    if (!visit) {
+      setIsFirstVisit(true);
+      localStorage.setItem('visit', 'true');
+    }
+  }, []);
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -87,6 +97,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           <Header display={display} />
           {children}
           <GNB />
+          {isFirstVisit && <OnBoarding />}
         </div>
         <Toaster
           toastOptions={{
