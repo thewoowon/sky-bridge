@@ -10,21 +10,14 @@ import useLoading from '@/hooks/useLoading';
 import useHeaderStore from '@/store/useHeaderStore';
 import OnBoarding from '@/components/layout/OnBoading';
 import Splash from '@/components/layout/Splash';
+import Bounce from '@/components/element/bounce';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
   const loading = useLoading();
   const { display } = useHeaderStore();
   const [isFirstVisit, setIsFirstVisit] = useState(false);
   const [isSplashVisible, setIsSplashVisible] = useState(false);
-
-  useEffect(() => {
-    const splashStatus = sessionStorage.getItem('splashStatus');
-    if (!splashStatus) {
-      console.log('splashStatus', splashStatus);
-      setIsSplashVisible(true);
-      sessionStorage.setItem('splashStatus', 'shown');
-    }
-  }, []);
+  const [isLoading, setIsLoading] = useState(true);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -96,12 +89,49 @@ const Providers = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   useEffect(() => {
+    const splash = sessionStorage.getItem('splash');
     const visit = localStorage.getItem('visit');
+
+    if (!splash) {
+      setIsSplashVisible(true);
+      sessionStorage.setItem('splash', 'true');
+    } else {
+      setIsSplashVisible(false);
+    }
+
     if (!visit) {
       setIsFirstVisit(true);
       localStorage.setItem('visit', 'true');
+    } else {
+      setIsFirstVisit(false);
     }
+
+    setIsLoading(false); // 모든 초기화가 끝난 후 로딩 상태를 false로 설정
   }, []);
+
+  if (isLoading) {
+    return (
+      <div
+        className="root-container"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: 'calc(var(--vh, 1vh) * 100)', // height를 계산된 뷰포트 높이로 설정
+          position: 'relative',
+          maxWidth: '480px',
+          width: '100%',
+          margin: '0 auto',
+          boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+          overflow: 'auto', // overflow를 auto로 변경
+          backgroundColor: '#fff',
+        }}
+      >
+        <Bounce width={60} height={60} />
+      </div>
+    );
+  }
 
   return (
     <>
