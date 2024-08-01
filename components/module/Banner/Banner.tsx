@@ -17,7 +17,7 @@ const Banner = () => {
   };
   return (
     <Container>
-      <Swiper
+      <StyledSwiper
         autoplay={{
           delay: 3000,
           disableOnInteraction: true,
@@ -25,19 +25,18 @@ const Banner = () => {
         loop={true}
         pagination={pagination}
         modules={[Autoplay, Pagination]}
-        className="banner-swiper"
         spaceBetween={20}
       >
-        <SwiperSlide>
+        <StyledSwiperSlide>
           <Banner1 />
-        </SwiperSlide>
-        <SwiperSlide>
+        </StyledSwiperSlide>
+        <StyledSwiperSlide>
           <Banner2 />
-        </SwiperSlide>
-        <SwiperSlide>
+        </StyledSwiperSlide>
+        <StyledSwiperSlide>
           <Banner3 />
-        </SwiperSlide>
-      </Swiper>
+        </StyledSwiperSlide>
+      </StyledSwiper>
     </Container>
   );
 };
@@ -48,4 +47,25 @@ const Container = styled.div`
   width: 100%;
   height: fit-content;
   padding: 0 16px;
+`;
+
+const StyledSwiper = styled(Swiper)`
+  width: 100%;
+  height: 175px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .swiper-wrapper {
+    height: fit-content;
+  }
+`;
+
+const StyledSwiperSlide = styled(SwiperSlide)`
+  text-align: center;
+  font-size: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

@@ -1,8 +1,8 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
-import 'swiper/css/pagination';
-import '@styles/schedule-swiper.css';
+// import 'swiper/css/pagination';
+// import '@styles/schedule-swiper.css';
 import styled from '@emotion/styled';
 import { TYPOGRAPHY } from '@/styles/typography';
 import ScheduleItem from './ScheduleItem';
@@ -44,17 +44,20 @@ const Schedule = () => {
       <Swiper
         className="schedule-swiper"
         slidesPerView={'auto'}
-        spaceBetween={'12px'}
         style={{
           paddingLeft: '16px',
           overflow: 'visible',
+          width: '100%',
+          height: 'fit-content',
+          display: 'flex',
+          flexDirection: 'column',
         }}
         loop={true}
       >
         {SCHEDULE_DATA.map((schedule, index) => (
-          <SwiperSlide key={index}>
+          <StyledSwiperSlide key={index}>
             <ScheduleItem schedule={schedule} />
-          </SwiperSlide>
+          </StyledSwiperSlide>
         ))}
       </Swiper>
     </Container>
@@ -70,4 +73,12 @@ const Container = styled.div`
   flex-direction: column;
   gap: 14px;
   overflow: visible;
+`;
+
+const StyledSwiperSlide = styled(SwiperSlide)`
+  width: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 12px;
 `;
