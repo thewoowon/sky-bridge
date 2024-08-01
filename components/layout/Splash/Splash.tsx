@@ -1,8 +1,21 @@
 'use client';
 
 import styled from '@emotion/styled';
+import { useEffect, useState } from 'react';
 
 const Splash = () => {
+  const [boarding, setBoarding] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setBoarding(false);
+    }, 2000);
+  }, []);
+
+  if (!boarding) {
+    return null;
+  }
+
   return (
     <Container>
       <svg
@@ -137,7 +150,6 @@ const Container = styled.div`
     }
     to {
       opacity: 0;
-      display: none;
     }
   }
 `;
