@@ -9,6 +9,7 @@ import Header from '@/components/layout/Header';
 import useLoading from '@/hooks/useLoading';
 import useHeaderStore from '@/store/useHeaderStore';
 import OnBoarding from '@/components/layout/OnBoading';
+import Splash from '@/components/layout/Splash';
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   const loading = useLoading();
@@ -117,6 +118,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           {children}
           <GNB />
           {isFirstVisit && <OnBoarding />}
+          <Splash />
         </div>
         <Toaster
           toastOptions={{

@@ -74,7 +74,7 @@ const Background = () => {
               gap: '24px',
             }}
           >
-            <PwaGraduationCap />
+            <PwaCloud />
             <div>
               <div
                 style={{
@@ -93,7 +93,7 @@ const Background = () => {
               gap: '24px',
             }}
           >
-            <PwaCloud />
+            <PwaGraduationCap />
             <div>
               <div
                 style={{
