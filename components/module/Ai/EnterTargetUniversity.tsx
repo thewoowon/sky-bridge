@@ -3,12 +3,13 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import toast from 'react-hot-toast';
 
 type EnterTargetUniversityProps = {
   state: FlowState;
   next: () => void;
   context: FlowContext;
-  setContext: (targetUniversity: string) => void;
+  setUniversitySearchOpen: () => void;
   generatePlan: () => void;
 };
 
@@ -16,7 +17,7 @@ const EnterTargetUniversity = ({
   state,
   next,
   context,
-  setContext,
+  setUniversitySearchOpen,
   generatePlan,
 }: EnterTargetUniversityProps) => {
   return (
@@ -88,17 +89,26 @@ const EnterTargetUniversity = ({
         <TargetInput
           placeholder="대학교 이름을 입력해주세요."
           value={context.targetUniversity || ''}
-          onChange={(e) => {
-            setContext(e.target.value);
+          readOnly
+          onClick={() => {
+            // 모달 열기
+            setUniversitySearchOpen();
           }}
-          onKeyDown={async (e) => {
-            if (e.key === 'Enter') {
-              await generatePlan();
-            }
+          onChange={() => {
+            return;
           }}
+          // onKeyDown={async (e) => {
+          //   if (e.key === 'Enter') {
+          //     await generatePlan();
+          //   }
+          // }}
         />
         <Button
           onClick={async () => {
+            if (!context.targetUniversity) {
+              toast.error('대학교 이름을 입력해주세요.');
+              return;
+            }
             await generatePlan();
           }}
           disabled={context.targetUniversity ? false : true}

@@ -18,9 +18,11 @@ import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import '@styles/snap-swiper.css';
+import { Mousewheel } from 'swiper/modules';
 import useWarnOnUnload from '@/hooks/useWarnOnUnload';
 import customAxios from '@/lib/axios';
 import useHeaderStore from '@/store/useHeaderStore';
+import UniversitySearch from '@/components/module/Ai/UniversitySearch';
 
 const YEAR_LIST = [2024, 2025, 2026, 2027, 2028, 2029, 2030];
 
@@ -35,6 +37,7 @@ const AiPage = () => {
   const handleClose = () => setOpen(false);
   const [examYear, setExamYear] = useState(2024);
   const swiperRef = useRef<SwiperRef | null>(null);
+  const [universitySearchOpen, setUniversitySearchOpen] = useState(false);
 
   useWarnOnUnload();
 
@@ -87,7 +90,7 @@ const AiPage = () => {
           state={flowState}
           next={flowProps.next}
           context={flowProps.flowContext}
-          setContext={flowProps.setTargetUniversity}
+          setUniversitySearchOpen={() => setUniversitySearchOpen(true)}
           generatePlan={async () => {
             setGenerateLoading(true);
             await getResult();
@@ -181,9 +184,16 @@ const AiPage = () => {
                 setExamYear(YEAR_LIST[swiper.activeIndex]);
               }}
               mousewheel={true}
+              modules={[Mousewheel]}
             >
               {YEAR_LIST.map((year, index) => (
-                <SnapSlideItem key={index}>
+                <SnapSlideItem
+                  key={index}
+                  onClick={(e) => {
+                    setExamYear(year);
+                    swiperRef.current?.swiper.slideTo(index);
+                  }}
+                >
                   {year}
                   <Highlight selected={year === examYear} key={year}>
                     {year}
@@ -229,6 +239,11 @@ const AiPage = () => {
           </ButtonWrapper>
         </div>
       </Modal>
+      <UniversitySearch
+        open={universitySearchOpen}
+        onClose={() => setUniversitySearchOpen(false)}
+        setContext={flowProps.setTargetUniversity}
+      />
     </Main>
   );
 };
@@ -337,12 +352,10 @@ const SnapBox = styled.div`
   width: 100%;
   height: 280px;
   overflow: auto;
-  scroll-snap-type: y mandatory;
-  scroll-behavior: smooth;
-  background-color: white;
   border-radius: 8px;
   padding: 8px 11px;
   gap: 9px;
+  background-color: white;
 
   &::-webkit-scrollbar {
     display: none;
