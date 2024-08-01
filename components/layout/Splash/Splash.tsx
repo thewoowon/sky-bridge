@@ -1,20 +1,8 @@
-import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 
 const Splash = () => {
-  const ref = useRef<HTMLDivElement>(null);
-  //   useEffect(() => {
-  //     if (ref.current) {
-  //       setTimeout(() => {
-  //         if (ref.current) {
-  //           ref.current.style.display = 'none';
-  //         }
-  //       }, 1500);
-  //     }
-  //   }, []);
-
   return (
-    <Container ref={ref}>
+    <Container>
       <svg
         width="254"
         height="31"

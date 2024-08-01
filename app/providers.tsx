@@ -1,7 +1,7 @@
 'use client';
 import { Toaster } from 'react-hot-toast';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google';
 import * as gtag from '@/lib/gtag';
 import GNB from '@/components/layout/GNB';
@@ -11,10 +11,20 @@ import useHeaderStore from '@/store/useHeaderStore';
 import OnBoarding from '@/components/layout/OnBoading';
 import Splash from '@/components/layout/Splash';
 
-export default function Providers({ children }: { children: React.ReactNode }) {
+const Providers = ({ children }: { children: React.ReactNode }) => {
   const loading = useLoading();
   const { display } = useHeaderStore();
   const [isFirstVisit, setIsFirstVisit] = useState(false);
+  const [isSplashVisible, setIsSplashVisible] = useState(false);
+
+  useEffect(() => {
+    const splashStatus = sessionStorage.getItem('splashStatus');
+    if (!splashStatus) {
+      console.log('splashStatus', splashStatus);
+      setIsSplashVisible(true);
+      sessionStorage.setItem('splashStatus', 'shown');
+    }
+  }, []);
 
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -118,7 +128,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
           {children}
           <GNB />
           {isFirstVisit && <OnBoarding />}
-          <Splash />
+          {isSplashVisible && <Splash />}
         </div>
         <Toaster
           toastOptions={{
@@ -150,4 +160,6 @@ export default function Providers({ children }: { children: React.ReactNode }) {
       <GoogleTagManager gtmId={gtag.GTM_TRACKING_ID || ''} />
     </>
   );
-}
+};
+
+export default memo(Providers);
