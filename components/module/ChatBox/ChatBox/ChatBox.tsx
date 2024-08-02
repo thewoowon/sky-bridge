@@ -193,11 +193,7 @@ const Form = styled.form<{
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(
-      90deg,
-      ${COLORS.primary[200]} 0%,
-      ${COLORS.primary[500]} 100%
-    );
+    background-color: ${COLORS.primary[500]};
   }
 `;
 
