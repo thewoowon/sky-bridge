@@ -71,7 +71,7 @@ const Main = styled.main`
     display: none;
   }
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   position: relative;
   gap: 20px;
   position: relative;

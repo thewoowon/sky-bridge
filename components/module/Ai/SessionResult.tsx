@@ -365,7 +365,7 @@ const ScheduleBox = styled.div`
   justify-content: flex-start;
   align-items: center;
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }

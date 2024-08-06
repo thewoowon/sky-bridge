@@ -44,5 +44,5 @@ const Main = styled.main`
     display: none;
   }
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
 `;

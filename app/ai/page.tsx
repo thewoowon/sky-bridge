@@ -112,7 +112,7 @@ const AiPage = () => {
   };
 
   useEffect(() => {
-    changeBackgroundColor('transparent');
+    changeBackgroundColor('#b9c5dc');
     change('block');
   }, [changeBackgroundColor, change]);
 
@@ -269,7 +269,7 @@ const Main = styled.main`
     display: none;
   }
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   position: relative;
 `;
 
@@ -330,8 +330,8 @@ const Button = styled.button<{
   }
 
   &:disabled {
-    background-color: ${COLORS.grayscale[300]};
-    color: #666d75;
+    background-color: ${COLORS.grayscale[200]};
+    color: ${COLORS.grayscale[500]};
     cursor: not-allowed;
   }
 `;
@@ -360,7 +360,7 @@ const SnapBox = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   scrollbar-width: none;
 `;
 

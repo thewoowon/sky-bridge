@@ -186,8 +186,8 @@ const Button = styled.button`
   }
 
   &:disabled {
-    background-color: ${COLORS.grayscale[300]};
-    color: #666d75;
+    background-color: ${COLORS.grayscale[200]};
+    color: ${COLORS.grayscale[500]};
     cursor: not-allowed;
   }
 `;
@@ -225,7 +225,7 @@ const ScheduleBox = styled.div`
   flex: 1;
   overflow: auto;
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   ::-webkit-scrollbar {
     display: none;
   }
