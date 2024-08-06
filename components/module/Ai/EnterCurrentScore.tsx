@@ -41,7 +41,7 @@ const EnterCurrentScore = ({
             color: COLORS.primary[700],
           }}
         >
-          현재 점수를 알아야 해.
+          현재 등급을 알아야 해.
         </span>
         <br />
         나한테 살짝 귀띔해 줄래?
@@ -100,15 +100,7 @@ const EnterCurrentScore = ({
           ))}
         </ScoreBox>
         <ButtonBox>
-          <Button
-            onClick={next}
-            style={{
-              backgroundColor: COLORS.grayscale[700],
-              color: 'white',
-            }}
-          >
-            대답하기 싫어
-          </Button>
+          <NextButton onClick={next}>다음에</NextButton>
           <Button onClick={next} disabled={context.currentScore ? false : true}>
             이거야
           </Button>
@@ -164,8 +156,33 @@ const Button = styled.button`
   }
 
   &:disabled {
-    background-color: ${COLORS.grayscale[300]};
-    color: #666d75;
+    background-color: ${COLORS.grayscale[200]};
+    color: ${COLORS.grayscale[500]};
+    cursor: not-allowed;
+  }
+`;
+
+const NextButton = styled.button`
+  width: 100%;
+  height: 44px;
+  background-color: white;
+  color: ${COLORS.primary[600]};
+  border-radius: 8px;
+  border: 1px solid ${COLORS.primary[200]};
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -2%;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    border: 1px solid ${COLORS.primary[600]};
+  }
+
+  &:disabled {
+    background-color: ${COLORS.grayscale[200]};
+    color: ${COLORS.grayscale[500]};
     cursor: not-allowed;
   }
 `;
