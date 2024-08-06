@@ -11,6 +11,7 @@ import { debounce } from 'lodash';
 import customAxios from '@/lib/axios';
 import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import useHeaderStore from '@/store/useHeaderStore';
+import { TYPOGRAPHY } from '@/styles/typography';
 
 type FormType = {
   chat: string;
@@ -36,6 +37,8 @@ const ChatPage = () => {
       role: 'sky',
     },
   ]);
+  const [isVisible, setIsVisible] = useState(true);
+  const [selectedId, setSelectedId] = useState<number>(-1);
 
   const {
     completion,
@@ -92,6 +95,7 @@ const ChatPage = () => {
       },
     ]);
     setIsLoading(true);
+    setSelectedId(id);
 
     switch (id) {
       // 수리논술 젤 잘 가르치는 강사는 누구야?
@@ -283,6 +287,7 @@ const ChatPage = () => {
         break;
     }
     setIsLoading(false);
+    setSelectedId(-1);
   };
 
   const debounceOnSelectionSubmit = debounce(onSelectionSubmit, 300);
@@ -345,10 +350,44 @@ const ChatPage = () => {
                 ref={scrollRef}
                 onSelectionSubmit={debounceOnSelectionSubmit}
                 isLoading={loading}
+                setIsVisible={setIsVisible}
               />
             );
           })}
         </ChatContext>
+        {!isVisible && (
+          <TagSelectionList
+            style={{
+              ...TYPOGRAPHY.body['small2'],
+            }}
+          >
+            <div
+              style={{
+                position: 'absolute',
+                left: '0',
+                backgroundColor: 'white',
+                padding: '11px 12px 11px 16px',
+                borderTopRightRadius: '37px',
+                borderBottomRightRadius: '37px',
+                zIndex: 1,
+                color: COLORS.primary[500],
+              }}
+            >
+              예시질문
+            </div>
+            <InnerTagList>
+              {SELECTION.map((selection, index) => (
+                <TagSelection
+                  key={index}
+                  onClick={() => onSelectionSubmit(index)}
+                  selected={isLoading && selectedId === index}
+                >
+                  {selection.title}
+                </TagSelection>
+              ))}
+            </InnerTagList>
+          </TagSelectionList>
+        )}
         <ChatBox
           onSubmit={handleSubmit(onSubmit)}
           control={control}
@@ -378,7 +417,7 @@ const Main = styled.main`
     display: none;
   }
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
 `;
 
 const ChatArea = styled.div`
@@ -389,7 +428,7 @@ const ChatArea = styled.div`
   flex-direction: column;
   justify-content: space-between;
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -402,10 +441,56 @@ const ChatContext = styled.div`
   flex: 1;
   overflow-y: auto;
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
   gap: 12px;
-  padding-bottom: 12px;
+  padding-bottom: 20px;
+`;
+
+const TagSelectionList = styled.div`
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: auto;
+  scrollbar-width: none;
+  --ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  margin-bottom: 12px;
+`;
+
+const InnerTagList = styled.div`
+  position: absolute;
+  right: 0;
+  display: flex;
+  gap: 7px;
+  width: 100%;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-left: 77px;
+  --ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const TagSelection = styled.div<{
+  selected?: boolean;
+}>`
+  padding: 8px 12px;
+  border-radius: 37px;
+  background-color: ${({ selected }) =>
+    selected ? COLORS.primary[500] : COLORS.primary[50]};
+  color: ${({ selected }) => (selected ? 'white' : COLORS.primary[500])};
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: ${COLORS.primary[100]};
+  }
 `;

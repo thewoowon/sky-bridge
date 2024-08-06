@@ -3,7 +3,7 @@ import Bounce from '@/components/element/bounce';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
-import { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -11,6 +11,8 @@ import 'swiper/css/pagination';
 import '@styles/workbook-swiper.css';
 import Image from 'next/image';
 import { marked } from 'marked';
+import useVisibleObserver from '@/hooks/useVisibleObserver';
+import Gurumi from '@/components/element/gurumi';
 
 type SkyChatProps = {
   chat: string;
@@ -18,10 +20,11 @@ type SkyChatProps = {
   type?: 'selection' | 'workbook' | 'schedule' | 'teacher' | 'guideline';
   onSelectionSubmit: (id: number) => void;
   isLoading?: boolean;
+  setIsVisible: React.Dispatch<SetStateAction<boolean>>;
 };
 
 const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
-  ({ chat, data, type, onSelectionSubmit, isLoading }, ref) => {
+  ({ chat, data, type, onSelectionSubmit, isLoading, setIsVisible }, ref) => {
     const textArray = chat.split('\n').map((line, index) => line.trim());
 
     while (textArray.length > 0 && textArray[textArray.length - 1] === '') {
@@ -29,6 +32,20 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
     }
 
     const resizeRef = useRef<HTMLDivElement>(null);
+
+    const handleVisibilityChange = (isIntersecting: boolean) => {
+      setIsVisible(isIntersecting);
+    };
+
+    const visibleRef = useVisibleObserver(
+      handleVisibilityChange,
+      {
+        root: null, // 뷰포트를 기준으로 관찰
+        rootMargin: '0px',
+        threshold: 0.1, // 타겟의 10%가 보이면 callback 호출
+      },
+      chat,
+    );
 
     useEffect(() => {
       const handleResize = () => {
@@ -51,16 +68,17 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
 
     if (isLoading) {
       return (
-        <Container
-          style={{
-            ...TYPOGRAPHY.body['large2'],
-            fontWeight: 400,
-            color: 'black',
-          }}
-          ref={resizeRef}
-        >
-          <Bounce />
-        </Container>
+        <Gurumi />
+        // <Container
+        //   style={{
+        //     ...TYPOGRAPHY.body['large2'],
+        //     fontWeight: 400,
+        //     color: 'black',
+        //   }}
+        //   ref={resizeRef}
+        // >
+        //   <Bounce />
+        // </Container>
       );
     }
 
@@ -91,7 +109,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 color: 'black',
                 gap: '8px',
               }}
-              ref={resizeRef}
+              ref={visibleRef}
             >
               {data.map((item, index) => (
                 <SelectionBox
@@ -100,21 +118,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                     onSelectionSubmit(index);
                   }}
                 >
-                  <div
-                    style={{
-                      width: '22px',
-                      height: '22px',
-                      borderRadius: '50%',
-                      backgroundColor: COLORS.primary[500],
-                      color: 'white',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      ...TYPOGRAPHY.body['medium1'],
-                    }}
-                  >
-                    {index + 1}
-                  </div>
+                  {['👩🏻‍🏫', '📚', '🗓', '🏫', '📖'][index]}&nbsp;
                   {item.title}
                 </SelectionBox>
               ))}
@@ -448,6 +452,11 @@ const SelectionBox = styled.div`
   border-radius: 8px;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
+  color: #343a40;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: -2%;
 
   &:hover {
     background-color: ${COLORS.primary[100]};

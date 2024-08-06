@@ -173,7 +173,7 @@ const Form = styled.form<{
   justify-content: space-between;
   align-items: flex-end;
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
@@ -205,7 +205,7 @@ const Textarea = styled.textarea`
   }
   background-color: white;
   scrollbar-width: none;
-  -ms-overflow-style: none;
+  --ms-overflow-style: none;
   &::-webkit-scrollbar {
     display: none;
   }
