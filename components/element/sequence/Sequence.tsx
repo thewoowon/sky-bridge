@@ -4,9 +4,9 @@ import '@styles/sequence-loader.css';
 import { motion } from 'framer-motion';
 
 const texts = [
-  '서울대 합격자를 가장 많이 배출한 \n학교는 어디일까?',
-  '정답은 외대부고야.\n외대부고는 서울대 합격자를 가장 많이 배출한 학교로 유명해.',
-  '정시최초까지 58명(수시 28명+정시 30명)의 실적을 \n내며 지난해에 이어 정상의 자리를 굳혔어.',
+  '서울대 합격자를 가장 많이 배출한\n학교는 어디일까?',
+  '정답은 외대부고야. 외대부고는\n서울대 합격자를 가장 많이 배출한 학교로 유명해.',
+  '정시최초까지 58명(수시 28명+정시 30명)의 실적을\n내며 지난해에 이어 정상의 자리를 굳혔어.',
   '일타강사 연봉 TOP 3는 누구일까?',
   'TOP 3부터 순서대로 이투스 정승제\n 이투스 이지영, 메가 스터디 현우진이야.',
   '이들은 하나같이 연 100억 이상의 수익을 올리며\n강사로서의 명성을 떨친 인물들이야.',
@@ -62,9 +62,6 @@ const Sequence = ({ isLoading }: SequenceProps) => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            style={{
-              ...TYPOGRAPHY.title['large'],
-            }}
             key={i}
           >
             {text}
