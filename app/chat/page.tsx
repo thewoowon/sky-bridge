@@ -68,6 +68,7 @@ const ChatPage = () => {
       { chat, role: 'user' },
       { chat: String(response), role: 'sky' },
     ]);
+    setTypewriterLoading(true);
     setIsLoading(false);
   };
 
@@ -151,7 +152,7 @@ const ChatPage = () => {
         }
 
         break;
-      // 현우진 vs 정승제, 누구 강의가 더 좋아?
+      // 최서희 선생님 문학 고전 입문할 때 보기 좋은 강의 추천해 줘
       case 1:
         try {
           const response = await fetch(
@@ -289,6 +290,7 @@ const ChatPage = () => {
       default:
         break;
     }
+    setTypewriterLoading(true);
     setIsLoading(false);
     setSelectedId(-1);
   };
@@ -319,6 +321,7 @@ const ChatPage = () => {
             type: 'selection',
           },
         ]);
+        setTypewriterLoading(true);
       }, 500);
     }, 2000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -522,8 +525,8 @@ const TagSelection = styled.button<{
   }
 
   &:disabled {
-    background-color: ${COLORS.grayscale[100]};
-    color: ${COLORS.grayscale[300]};
+    background-color: ${COLORS.grayscale[70]};
+    color: ${COLORS.grayscale[400]};
     cursor: not-allowed;
   }
 `;

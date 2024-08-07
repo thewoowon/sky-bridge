@@ -2,7 +2,7 @@ import Typewriter from '@/components/effect/Typewriter';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
-import { forwardRef, SetStateAction } from 'react';
+import { forwardRef, memo, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -96,7 +96,6 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
     // data가 있다면 반드시 type이 존재해야 함
     if (data && Array.isArray(data)) {
       if (!type) {
-        setTypewriterLoading && setTypewriterLoading(false);
         return (
           <Container
             style={{
@@ -113,7 +112,6 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
 
       switch (type) {
         case 'selection':
-          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <Container
               style={{
@@ -138,7 +136,6 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             </Container>
           );
         case 'workbook':
-          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <SwiperContainer
               style={{
@@ -223,7 +220,6 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             </SwiperContainer>
           );
         case 'schedule':
-          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <Container
               style={{
@@ -418,7 +414,6 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             </Container>
           );
         default:
-          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <Container
               style={{
@@ -456,7 +451,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
   },
 );
 
-export default SkyChat;
+export default memo(SkyChat);
 
 SkyChat.displayName = 'SkyChat';
 

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 
 type TypewriterProps = {
   textArray: string[];
@@ -49,4 +49,4 @@ const Typewriter = ({
   return <div style={{ whiteSpace: 'pre-wrap' }}>{currentText}</div>;
 };
 
-export default Typewriter;
+export default memo(Typewriter);
