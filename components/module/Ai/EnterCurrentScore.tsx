@@ -100,7 +100,7 @@ const EnterCurrentScore = ({
           ))}
         </ScoreBox>
         <ButtonBox>
-          <NextButton onClick={next}>다음에</NextButton>
+          <NextButton onClick={next}>비밀이야</NextButton>
           <Button onClick={next} disabled={context.currentScore ? false : true}>
             이거야
           </Button>

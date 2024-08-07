@@ -292,13 +292,31 @@ const ResultList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: auto;
+  overflow-y: scroll;
 
+  /* 웹킷 기반 브라우저용 스크롤바 */
   &::-webkit-scrollbar {
-    display: none;
+    width: 5px; /* 스크롤바의 너비 */
   }
-  scrollbar-width: none;
-  --ms-overflow-style: none;
+
+  &::-webkit-scrollbar-track {
+    background-color: ${COLORS
+      .primary[100]} !important; /* 스크롤바의 트랙 색상 */
+    border-radius: 17px; /* 스크롤바의 모서리 둥글게 */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${COLORS.primary[300]}; /* 스크롤바의 색상 */
+    border-radius: 17px; /* 스크롤바 모서리 둥글게 */
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${COLORS.primary[400]}; /* 스크롤바를 호버할 때의 색상 */
+  }
+
+  scrollbar-width: thin; /* 스크롤바의 너비: auto, thin, none 중 선택 */
+  scrollbar-color: ${COLORS.primary[300]} ${COLORS.primary[100]}; /* 스크롤바 색상과 트랙 색상 */
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* 자동 숨김 스크롤바 */
   margin-top: 21px;
 `;
 
@@ -306,7 +324,6 @@ const ResultItem = styled.div`
   width: 100%;
   height: 44px;
   padding: 8px 6px;
-  border-bottom: 1px solid ${COLORS.grayscale[100]};
   display: flex;
   align-items: center;
   gap: 15px;

@@ -225,17 +225,14 @@ const AiPage = () => {
             >
               확인
             </Button>
-            <Button
-              backgroundColor={COLORS.grayscale[700]}
-              hoverBackgroundColor={COLORS.grayscale[800]}
-              color="white"
+            <CancelButton
               onClick={() => {
                 setExamYear(2024);
                 handleClose();
               }}
             >
               취소
-            </Button>
+            </CancelButton>
           </ButtonWrapper>
         </div>
       </Modal>
@@ -327,6 +324,31 @@ const Button = styled.button<{
     background-color: ${({ hoverBackgroundColor }) =>
       hoverBackgroundColor || COLORS.primary[600]};
     color: ${({ hoverColor }) => hoverColor || COLORS.primary[100]};
+  }
+
+  &:disabled {
+    background-color: ${COLORS.grayscale[200]};
+    color: ${COLORS.grayscale[500]};
+    cursor: not-allowed;
+  }
+`;
+
+const CancelButton = styled.button`
+  width: 100%;
+  height: 44px;
+  background-color: white;
+  color: ${COLORS.primary[600]};
+  border-radius: 8px;
+  border: 1px solid ${COLORS.primary[200]};
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 20px;
+  letter-spacing: -2%;
+  transition: border 0.2s ease-in-out;
+
+  &:hover {
+    border: 1px solid ${COLORS.primary[600]};
   }
 
   &:disabled {
