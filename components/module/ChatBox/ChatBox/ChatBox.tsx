@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from '@emotion/styled';
 import { Controller, Control, useWatch } from 'react-hook-form';
 import { debounce } from 'lodash';
@@ -209,7 +209,7 @@ const Textarea = styled.textarea`
   &::-webkit-scrollbar {
     display: none;
   }
-  padding: 11px 19px;
+  padding: 12px 19px;
   border-radius: 8px;
   box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.04);
   border-style: inset;

@@ -1,16 +1,17 @@
-// components/Typewriter.js
 import { useState, useEffect } from 'react';
 
 type TypewriterProps = {
   textArray: string[];
   typingSpeed?: number;
   delayBetweenLines?: number;
+  onComplete?: () => void;
 };
 
 const Typewriter = ({
   textArray,
   typingSpeed = 50,
   delayBetweenLines = 300,
+  onComplete,
 }: TypewriterProps) => {
   const [currentText, setCurrentText] = useState('');
   const [currentLine, setCurrentLine] = useState(0);
@@ -32,8 +33,18 @@ const Typewriter = ({
         }, delayBetweenLines);
         return () => clearTimeout(timeout);
       }
+    } else if (currentLine === textArray.length && onComplete) {
+      onComplete();
     }
-  }, [textArray, charIndex, currentLine, typingSpeed, delayBetweenLines]);
+  }, [
+    textArray,
+    charIndex,
+    currentLine,
+    typingSpeed,
+    delayBetweenLines,
+    onComplete,
+    currentText,
+  ]);
 
   return <div style={{ whiteSpace: 'pre-wrap' }}>{currentText}</div>;
 };

@@ -1,9 +1,8 @@
 import Typewriter from '@/components/effect/Typewriter';
-import Bounce from '@/components/element/bounce';
 import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
-import { forwardRef, SetStateAction, useEffect, useRef, useState } from 'react';
+import { forwardRef, SetStateAction } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import 'swiper/css';
@@ -21,17 +20,29 @@ type SkyChatProps = {
   onSelectionSubmit: (id: number) => void;
   isLoading?: boolean;
   setIsVisible: React.Dispatch<SetStateAction<boolean>>;
+  setTypewriterLoading?: React.Dispatch<SetStateAction<boolean>>;
 };
 
 const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
-  ({ chat, data, type, onSelectionSubmit, isLoading, setIsVisible }, ref) => {
+  (
+    {
+      chat,
+      data,
+      type,
+      onSelectionSubmit,
+      isLoading,
+      setIsVisible,
+      setTypewriterLoading,
+    },
+    ref,
+  ) => {
     const textArray = chat.split('\n').map((line, index) => line.trim());
 
     while (textArray.length > 0 && textArray[textArray.length - 1] === '') {
       textArray.pop();
     }
 
-    const resizeRef = useRef<HTMLDivElement>(null);
+    // const resizeRef = useRef<HTMLDivElement>(null);
 
     const handleVisibilityChange = (isIntersecting: boolean) => {
       setIsVisible(isIntersecting);
@@ -47,28 +58,28 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
       chat,
     );
 
-    useEffect(() => {
-      const handleResize = () => {
-        resizeRef.current?.scrollIntoView({ behavior: 'smooth' });
-      };
+    // useEffect(() => {
+    //   const handleResize = () => {
+    //     resizeRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    //   };
 
-      const resizeObserver = new ResizeObserver(handleResize);
-      const currentRef = resizeRef.current;
+    //   const resizeObserver = new ResizeObserver(handleResize);
+    //   const currentRef = resizeRef.current;
 
-      if (currentRef) {
-        resizeObserver.observe(currentRef);
-      }
+    //   if (currentRef) {
+    //     resizeObserver.observe(currentRef);
+    //   }
 
-      return () => {
-        if (currentRef) {
-          resizeObserver.unobserve(currentRef);
-        }
-      };
-    }, []);
+    //   return () => {
+    //     if (currentRef) {
+    //       resizeObserver.unobserve(currentRef);
+    //     }
+    //   };
+    // }, [resizeRef.current]);
 
     if (isLoading) {
       return (
-        <Gurumi />
+        <Gurumi ref={ref} />
         // <Container
         //   style={{
         //     ...TYPOGRAPHY.body['large2'],
@@ -85,6 +96,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
     // data가 있다면 반드시 type이 존재해야 함
     if (data && Array.isArray(data)) {
       if (!type) {
+        setTypewriterLoading && setTypewriterLoading(false);
         return (
           <Container
             style={{
@@ -92,7 +104,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
               fontWeight: 400,
               color: 'black',
             }}
-            ref={resizeRef}
+            ref={ref}
           >
             <div>개발자에게 문의해주세요</div>
           </Container>
@@ -101,6 +113,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
 
       switch (type) {
         case 'selection':
+          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <Container
               style={{
@@ -125,6 +138,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             </Container>
           );
         case 'workbook':
+          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <SwiperContainer
               style={{
@@ -132,7 +146,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 fontWeight: 400,
                 color: 'black',
               }}
-              ref={resizeRef}
+              ref={ref}
             >
               <Swiper
                 slidesPerView={'auto'}
@@ -209,6 +223,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
             </SwiperContainer>
           );
         case 'schedule':
+          setTypewriterLoading && setTypewriterLoading(false);
           return (
             <Container
               style={{
@@ -217,7 +232,7 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 color: 'black',
                 gap: '30px',
               }}
-              ref={resizeRef}
+              ref={ref}
             >
               {data.map((item, index) => (
                 <div
@@ -359,12 +374,15 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 maxWidth: '289px',
                 gap: '12px',
               }}
-              ref={resizeRef}
+              ref={ref}
             >
               <Typewriter
                 typingSpeed={20}
                 // 마지막에 오는 ''은 삭제
                 textArray={teacherList}
+                onComplete={() => {
+                  setTypewriterLoading && setTypewriterLoading(false);
+                }}
               />
               {/* <Button
                 onClick={() => {
@@ -383,18 +401,34 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
                 ...TYPOGRAPHY.body['large2'],
                 fontWeight: 400,
                 color: 'black',
+                maxWidth: '85%',
               }}
-              ref={resizeRef}
+              ref={ref}
             >
-              <Typewriter typingSpeed={20} textArray={textArray} />
+              <Typewriter
+                typingSpeed={20}
+                textArray={textArray}
+                onComplete={() => {
+                  setTypewriterLoading && setTypewriterLoading(false);
+                }}
+              />
               {/* {data.map((item, index) => (
                 <div key={index}>{item.title}</div>
               ))} */}
             </Container>
           );
         default:
+          setTypewriterLoading && setTypewriterLoading(false);
           return (
-            <Container>
+            <Container
+              style={{
+                ...TYPOGRAPHY.body['large2'],
+                fontWeight: 400,
+                color: 'black',
+                maxWidth: '85%',
+              }}
+              ref={ref}
+            >
               <div>개발자에게 문의해주세요</div>
             </Container>
           );
@@ -408,9 +442,15 @@ const SkyChat = forwardRef<HTMLDivElement, SkyChatProps>(
           fontWeight: 400,
           color: 'black',
         }}
-        ref={resizeRef}
+        ref={ref}
       >
-        <Typewriter typingSpeed={20} textArray={textArray} />
+        <Typewriter
+          typingSpeed={20}
+          textArray={textArray}
+          onComplete={() => {
+            setTypewriterLoading && setTypewriterLoading(false);
+          }}
+        />
       </Container>
     );
   },

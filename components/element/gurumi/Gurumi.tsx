@@ -1,13 +1,15 @@
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import { keyframes } from '@emotion/react';
+import { forwardRef } from 'react';
 
-const Gurumi = () => {
+const Gurumi = forwardRef<HTMLDivElement, {}>(({}, ref) => {
   return (
     <Container
       style={{
         ...TYPOGRAPHY.body['small2'],
       }}
+      ref={ref}
     >
       <AnimationContainer>
         <svg
@@ -125,7 +127,9 @@ const Gurumi = () => {
       답변하러 가는 중...
     </Container>
   );
-};
+});
+
+Gurumi.displayName = 'Gurumi';
 
 export default Gurumi;
 

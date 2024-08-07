@@ -23,6 +23,7 @@ const ChatPage = () => {
 
   const scrollRef = useRef<HTMLDivElement>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [typewriterLoading, setTypewriterLoading] = useState<boolean>(false);
   const [chatContext, setChatContext] = useState<
     {
       chat: string;
@@ -60,6 +61,7 @@ const ChatPage = () => {
     setChatContext([...chatContext, { chat, role: 'user' }]);
     setValue('chat', '');
     setIsLoading(true);
+    setTypewriterLoading(true);
     const response = await complete(chat);
     setChatContext([
       ...chatContext,
@@ -95,6 +97,7 @@ const ChatPage = () => {
       },
     ]);
     setIsLoading(true);
+    setTypewriterLoading(true);
     setSelectedId(id);
 
     switch (id) {
@@ -321,11 +324,30 @@ const ChatPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+  //   }, 100);
+  // }, [chatContext]);
+
   useEffect(() => {
-    setTimeout(() => {
-      scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, 100);
-  }, [chatContext]);
+    const handleResize = () => {
+      scrollRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    };
+
+    const resizeObserver = new ResizeObserver(handleResize);
+    const currentRef = scrollRef.current;
+
+    if (currentRef) {
+      resizeObserver.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        resizeObserver.unobserve(currentRef);
+      }
+    };
+  }, [chatContext, scrollRef]);
 
   useEffect(() => {
     changeBackgroundColor('#F8F9FA');
@@ -351,6 +373,8 @@ const ChatPage = () => {
                 onSelectionSubmit={debounceOnSelectionSubmit}
                 isLoading={loading}
                 setIsVisible={setIsVisible}
+                // typewriter의 loading을 제어하기 위한 state
+                setTypewriterLoading={setTypewriterLoading}
               />
             );
           })}
@@ -380,7 +404,10 @@ const ChatPage = () => {
                 <TagSelection
                   key={index}
                   onClick={() => onSelectionSubmit(index)}
-                  selected={isLoading && selectedId === index}
+                  selected={
+                    (isLoading || typewriterLoading) && selectedId === index
+                  }
+                  disabled={isLoading || typewriterLoading}
                 >
                   {selection.title}
                 </TagSelection>
@@ -478,7 +505,7 @@ const InnerTagList = styled.div`
   }
 `;
 
-const TagSelection = styled.div<{
+const TagSelection = styled.button<{
   selected?: boolean;
 }>`
   padding: 8px 12px;
@@ -492,5 +519,11 @@ const TagSelection = styled.div<{
 
   &:hover {
     background-color: ${COLORS.primary[100]};
+  }
+
+  &:disabled {
+    background-color: ${COLORS.grayscale[100]};
+    color: ${COLORS.grayscale[300]};
+    cursor: not-allowed;
   }
 `;
