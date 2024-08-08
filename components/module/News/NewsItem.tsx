@@ -4,8 +4,6 @@ import styled from '@emotion/styled';
 import Image from 'next/image';
 
 const NewsItem = ({ news }: { news: News }) => {
-  // 0 또는 1을 랜덤 생성
-  const random = Math.floor(Math.random() * 2);
   return (
     <Container>
       <div
@@ -28,8 +26,8 @@ const NewsItem = ({ news }: { news: News }) => {
             top: '5px',
             left: '3px',
             ...TYPOGRAPHY.body['small2'],
-            color: random ? '#7964F4' : '#F84B70',
-            backgroundColor: random ? '#F3F1FD' : '#FDF0F3',
+            color: news.newsType === '수시' ? '#7964F4' : '#F84B70',
+            backgroundColor: news.newsType === '수시' ? '#F3F1FD' : '#FDF0F3',
             zIndex: 1,
             borderRadius: '23px',
             padding: '0 6px',
