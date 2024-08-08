@@ -6,31 +6,47 @@ import 'swiper/css';
 import styled from '@emotion/styled';
 import { TYPOGRAPHY } from '@/styles/typography';
 import ScheduleItem from './ScheduleItem';
-
-const SCHEDULE_DATA: Schedule[] = [
-  {
-    type: '수시',
-    date: '2024-07-30',
-    title: '학생부 작성 기준일',
-  },
-  {
-    type: '정시',
-    date: '2024-08-12',
-    title: '입학원서 접수 기간',
-  },
-  {
-    type: '수시',
-    date: '2024-09-10',
-    title: '학생부 제출 마감일',
-  },
-  {
-    type: '정시',
-    date: '2024-11-18',
-    title: '2024 정시 수능 시험',
-  },
-];
+import { useQuery } from '@tanstack/react-query';
+import customAxios from '@/lib/axios';
+import { useEffect, useState } from 'react';
+import Bounce from '@/components/element/bounce';
 
 const Schedule = () => {
+  const [scheduleList, setScheduleList] = useState<Schedule[]>([]);
+  // Queries
+  const { isLoading, data } = useQuery({
+    queryKey: ['schedule'],
+    queryFn: () => {
+      return customAxios({
+        method: 'GET',
+        url: `/schedule/schedule`,
+      }).then((res) => res.data);
+    },
+  });
+
+  useEffect(() => {
+    if (!data || data.length === 0) return;
+
+    const parseDate = (dateString: string) => {
+      return new Date(dateString).getTime();
+    };
+
+    const sortedSchedule: Schedule[] = [...data].sort(
+      (a: Schedule, b: Schedule) => {
+        return parseDate(a.scheduleDate) - parseDate(b.scheduleDate);
+      },
+    );
+
+    setScheduleList(sortedSchedule);
+  }, [data]);
+
+  if (isLoading) {
+    return (
+      <Container>
+        <Bounce />
+      </Container>
+    );
+  }
   return (
     <Container>
       <div
@@ -54,7 +70,7 @@ const Schedule = () => {
         }}
         loop={true}
       >
-        {SCHEDULE_DATA.map((schedule, index) => (
+        {scheduleList.map((schedule, index) => (
           <StyledSwiperSlide key={index}>
             <ScheduleItem schedule={schedule} />
           </StyledSwiperSlide>

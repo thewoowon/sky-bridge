@@ -4,8 +4,8 @@ import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 
 const ScheduleItem = ({ schedule }: { schedule: Schedule }) => {
-  const dDay = new Date(schedule.date).getTime() - new Date().getTime();
-  const dateString = schedule.date.split('-');
+  const dDay = new Date(schedule.scheduleDate).getTime() - new Date().getTime();
+  const dateString = schedule.scheduleDate.split('-');
   return (
     <Container>
       <div
@@ -23,12 +23,12 @@ const ScheduleItem = ({ schedule }: { schedule: Schedule }) => {
           }}
         >
           <Type
-            type={schedule.type}
+            type={schedule.scheduleType as '정시' | '수시'}
             style={{
               ...TYPOGRAPHY.body['medium1'],
             }}
           >
-            {schedule.type}
+            {schedule.scheduleType}
           </Type>
           <DDay
             style={{
@@ -45,7 +45,7 @@ const ScheduleItem = ({ schedule }: { schedule: Schedule }) => {
             ...TYPOGRAPHY.body['large1'],
           }}
         >
-          {schedule.title}
+          {schedule.scheduleName}
         </Title>
       </div>
       <DateString
