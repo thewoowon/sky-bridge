@@ -12,6 +12,12 @@ const nextConfig = withPWA({
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'api.skybrg.io',
+        port: '',
+        pathname: '/news/image/**/*',
+      },
+      {
+        protocol: 'https',
         hostname: 'imagedelivery.net',
         port: '',
         pathname: '/6qzLODAqs2g1LZbVYqtuQw/**/*',
@@ -20,7 +26,7 @@ const nextConfig = withPWA({
         protocol: 'https',
         hostname: 'k.kakaocdn.net',
         port: '',
-        hostname: '/**/*',
+        pathname: '/**/*',
       },
     ],
   },
