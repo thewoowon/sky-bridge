@@ -6,9 +6,11 @@ interface SvgIconProps {
 }
 
 type Schedule = {
-  type: '정시' | '수시';
-  date: string;
-  title: string;
+  scheduleName: string;
+  scheduleDate: string;
+  scheduleDateText: string;
+  scheduleType: string;
+  dday: string;
 };
 
 type Material = {
@@ -20,11 +22,14 @@ type Material = {
 };
 
 type News = {
-  title: string;
-  link: string;
-  view: number;
-  src: string;
-  date: string;
+  id: number;
+  newsName: string;
+  newsLink: string;
+  newsImage: string;
+  newsType: string;
+  viewCount: number;
+  regDate: string;
+  regDateText: string;
 };
 
 type ChatType = 'selection' | 'workbook' | 'schedule' | 'teacher' | 'guideline';
