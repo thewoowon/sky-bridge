@@ -19,7 +19,7 @@ const NewsItem = ({ news }: { news: News }) => {
           cursor: 'pointer',
         }}
         onClick={() => {
-          window.open(news.link, '_blank');
+          window.open(news.newsLink, '_blank');
         }}
       >
         <div
@@ -35,9 +35,15 @@ const NewsItem = ({ news }: { news: News }) => {
             padding: '0 6px',
           }}
         >
-          {random ? '수시' : '정시'}
+          {news.newsType}
         </div>
-        <Image src={news.src} alt={news.title} fill priority sizes="58" />
+        <Image
+          src={news.newsImage}
+          alt={news.newsName}
+          fill
+          priority
+          sizes="58"
+        />
       </div>
       <div
         style={{
@@ -52,10 +58,10 @@ const NewsItem = ({ news }: { news: News }) => {
             cursor: 'pointer',
           }}
           onClick={() => {
-            window.open(news.link, '_blank');
+            window.open(news.newsLink, '_blank');
           }}
         >
-          {news.title}
+          {news.newsName}
         </Title>
         <div
           style={{
@@ -64,8 +70,8 @@ const NewsItem = ({ news }: { news: News }) => {
             lineHeight: '10px',
           }}
         >
-          등록일 {news.date} · 조회{' '}
-          {news.view.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+          등록일 {news.regDate} · 조회{' '}
+          {news.viewCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
         </div>
       </div>
     </Container>
