@@ -1,6 +1,7 @@
 'use client';
 
 import { Banner, Materials, News, Schedule } from '@/components/module';
+import Bridger from '@/components/module/Bridger';
 import useBackgroundColorStore from '@/store/useBackgroundColorStore';
 import useHeaderStore from '@/store/useHeaderStore';
 import { COLORS } from '@/styles/color';
@@ -21,6 +22,7 @@ export default function Home() {
       <Banner />
       <Schedule />
       <Materials />
+      <Bridger />
       <News />
     </Main>
   );
