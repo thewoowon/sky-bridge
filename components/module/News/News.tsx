@@ -53,7 +53,16 @@ const News = () => {
   if (isLoading) {
     return (
       <Container>
-        <Bounce />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100px',
+          }}
+        >
+          <Bounce />
+        </div>
       </Container>
     );
   }
@@ -71,6 +80,7 @@ const News = () => {
           <div
             style={{
               ...TYPOGRAPHY.title['medium'],
+              fontWeight: 700,
             }}
           >
             주목해야 할 입시 뉴스

@@ -57,6 +57,7 @@ const Materials = () => {
       <div
         style={{
           ...TYPOGRAPHY.title['medium'],
+          fontWeight: 700,
         }}
       >
         🔥{' '}

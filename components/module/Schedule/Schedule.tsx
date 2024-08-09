@@ -43,7 +43,16 @@ const Schedule = () => {
   if (isLoading) {
     return (
       <Container>
-        <Bounce />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100px',
+          }}
+        >
+          <Bounce />
+        </div>
       </Container>
     );
   }
@@ -53,6 +62,7 @@ const Schedule = () => {
         style={{
           ...TYPOGRAPHY.title['medium'],
           padding: '0 16px',
+          fontWeight: 700,
         }}
       >
         다가오는 입시 일정
