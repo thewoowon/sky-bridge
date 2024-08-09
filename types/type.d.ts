@@ -60,3 +60,11 @@ type Teacher =
   | '정승제'
   | '주혜연'
   | '김민정';
+
+type Bridger = {
+  id: number;
+  name: string;
+  imageSrc: string;
+  intro: string;
+  tags: string[];
+};
