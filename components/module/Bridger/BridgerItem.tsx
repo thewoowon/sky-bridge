@@ -2,10 +2,15 @@ import { COLORS } from '@/styles/color';
 import { TYPOGRAPHY } from '@/styles/typography';
 import styled from '@emotion/styled';
 import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 const BridgerItem = ({ bridger }: { bridger: Bridger }) => {
   return (
-    <Container>
+    <Container
+      onClick={() => {
+        toast.success('😚 선생님이 강의를 준비 중이에요. 조금만 기다려주세요.');
+      }}
+    >
       <div
         style={{
           ...TYPOGRAPHY.body['large1'],
@@ -63,6 +68,12 @@ const Container = styled.div`
   border-radius: 8px;
   gap: 13px;
   box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.04);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0px 3px 20px 0 rgba(0, 0, 0, 0.1);
+  }
 `;
 
 const Tags = styled.div`
