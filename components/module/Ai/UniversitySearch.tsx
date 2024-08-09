@@ -72,7 +72,7 @@ const UniversitySearch = ({
   }
 
   return (
-    <Container>
+    <Container onClick={onClose}>
       <Wrapper open={open}>
         <div
           style={{
