@@ -67,4 +67,8 @@ type Bridger = {
   imageSrc: string;
   intro: string;
   tags: string[];
+  university: string;
+  major: string;
+  studentId: string;
+  subject: string[];
 };
